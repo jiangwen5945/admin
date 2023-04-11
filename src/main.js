@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import './api/mock'
 import '../src/assets/css/global.less'
+import '@/theme/theme.less'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);

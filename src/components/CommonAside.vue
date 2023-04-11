@@ -13,7 +13,7 @@
             <!-- 菜单标题 -->
             <el-menu-item>
                 <el-image  :src="require('@/assets/logo.png')"  style="width: 30px; height: 30px"></el-image>
-                <span v-show="!isCollapse" style="color:#fff;margin-left: 4px;font-size: 15px;">后台管理系统</span>
+                <span v-show="!isCollapse" style="color:#fff;margin-left: 4px;font-size: 15px;">瞎猫管理系统</span>
             </el-menu-item>
             <!-- 没有二级菜单 -->
             <el-menu-item :index="item.name" v-for="item in noChildren" :key="item.name" @click="handleUrl(item)">

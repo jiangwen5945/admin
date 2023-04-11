@@ -19,29 +19,13 @@ const routes = [
     component: Main,
     name: 'main',
     redirect: '/home',
-    children: [
-      // {path:'home', name:'home', component: Home},
-      // {path:'mall', name:'mall', component: Mall},
-      // {path:'user', name:'user', component: UserManage},
-      // {path:'page1', name:'page1', component: PageOne},
-      // {path:'page2', name:'page2', component: PageTwo},
-      // {  
-      //   path: '*',
-      //   component: ()=>import('@/view/Error.vue'),
-      //   name: 'ErrorView'
-      // }
-    ]
+    children: []
   },
   {
     path: '/login',
     component: Login,
     name: 'LoginView'
-  },
-  // {
-  //   path: '*',
-  //   component: Error,
-  //   name: 'ErrorView'
-  // }
+  }
 ]
 // 3. 创建实例
 const router = new VueRouter({

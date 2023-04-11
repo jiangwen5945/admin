@@ -26,6 +26,10 @@ export const userPermission = (data) =>{
     return http.post('/permissionApi/getMenu',data)
 }
 
+// 权限
+export const getAuthorityList = () => {
+  return http.get('/authority/getAuthorityList')
+}
 
 
 // 商品
@@ -101,8 +105,20 @@ export const updateClass = data => {
   return http.post('/class/edit', data)
 }
 
-
-// 权限
-export const getAuthorityList = () => {
-  return http.get('/authority/getAuthorityList')
+// 订单
+export const getOrderList = params => {
+  return http.get('/order/getOrderList', {params})
 }
+
+export const deleteOrder = data => {
+  return http.post('/order/del', data)
+}
+
+export const createOrder = data => {
+  return http.post('/order/add', data)
+}
+
+export const updateOrder = data => {
+  return http.post('/order/edit', data)
+}
+

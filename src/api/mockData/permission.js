@@ -35,39 +35,42 @@ export default {
               path: '/role',
               name: 'role',
               label: '角色管理',
-              icon: 'thumb',
+              icon: 's-check',
               url: 'RoleManage.vue'
             },
             {
               path: '/class',
               name: 'class',
               label: '部门管理',
-              icon: 'video-play',
+              icon: 's-marketing',
               url: 'ClassManage.vue'
             },
             {
-              // path: '/mall',
-              // name: 'mall',
-              // url: 'MallManage.vue',
-
               label: '商品管理',
-              icon: 'video-play',
+              icon: 'box',
               children: [
                 {
                   path: '/GoodsList',
                   name: 'GoodsList',
                   label: '商品列表',
-                  icon: 'bangzhu',
+                  icon: 's-order',
                   url: 'goods/GoodsList.vue'
                 },
                 {
                   path: '/GoodsCategory',
                   name: 'GoodsCategory',
                   label: '商品分类',
-                  icon: 'video-play',
+                  icon: 's-grid',
                   url: 'goods/GoodsCategory.vue'
                 }
               ]
+            },
+            {
+              path: '/order',
+              name: 'order',
+              label: '订单管理',
+              icon: 's-claim',
+              url: 'OrderManage.vue'
             }
           ],
           userInfo: {
@@ -76,7 +79,6 @@ export default {
             avatar: 'user.jpg'
           },
           token: Mock.Random.guid(),
-
           message: '获取成功'
         }
       }

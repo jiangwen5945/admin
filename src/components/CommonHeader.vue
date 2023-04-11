@@ -9,16 +9,22 @@
             </el-breadcrumb>
         </div>
         <div class="r-container">
-            <el-dropdown @command="handleCommand">
-                <div class="el-dropdown-link avatar-box">
-                    <el-avatar :src="require('@/assets/' + userInfo.avatar)"></el-avatar>
-                    <span class="username">{{ userInfo.username }}</span>
-                </div>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="1">个人中心</el-dropdown-item>
-                    <el-dropdown-item command="logout">退出</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
+          <div class="theme-icon" @click="$store.commit('changeTheme')">
+            <i  :class="[theme, theme==='dark'?'el-icon-sunny':'el-icon-moon']"></i>
+          </div>
+          <div class="test">
+            jiangwen
+          </div>
+          <el-dropdown @command="handleCommand">
+              <div class="el-dropdown-link avatar-box">
+                  <el-avatar :src="require('@/assets/' + userInfo.avatar)"></el-avatar>
+                  <span class="username">{{ userInfo.username }}</span>
+              </div>
+              <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="1">个人中心</el-dropdown-item>
+                  <el-dropdown-item command="logout">退出</el-dropdown-item>
+              </el-dropdown-menu>
+          </el-dropdown>
         </div>
     </div>
 </template>
@@ -28,7 +34,6 @@ import { mapState } from 'vuex';
 export default {
     data() {
         return {
-
         }
     },
     methods: {
@@ -47,7 +52,8 @@ export default {
     },
     computed: {
         ...mapState({
-            navList: state => state.tab.navList
+            navList: state => state.tab.navList,
+            theme: state => state.theme
         }),
         userInfo() {
             return this.$store.state.tab.userInfo || JSON.parse(Cookie.get('userInfo'))
@@ -100,6 +106,18 @@ export default {
             color: #fff;
             font-size: 12px;
             margin-left: 8px;
+        }
+
+        .theme-icon{
+          font-size: 24px;
+          margin-right: 20px;
+          .light{
+            color: #000;
+
+          }
+          .dark{
+            color: #fff;
+          }
         }
     }
 }
