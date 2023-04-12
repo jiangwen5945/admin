@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "mall-admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,8 +13,6 @@
     "echarts": "^5.1.2",
     "element-ui": "^2.15.13",
     "js-cookie": "^3.0.1",
-    "less": "^4.1.2",
-    "less-loader": "^6.0.0",
     "mockjs": "^1.1.0",
     "vue": "^2.6.14",
     "vue-router": "^3.6.5",
@@ -28,6 +26,8 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "node-sass": "^8.0.0",
+    "sass-loader": "^13.2.2",
     "unplugin-auto-import": "^0.15.2",
     "unplugin-vue-components": "^0.24.1",
     "vue-template-compiler": "^2.6.14"
@@ -50,5 +50,9 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "main": "index.js",
+  "repository": "git@github.com:jiangwen5945/admin.git",
+  "author": "jiangwen <908565666@qq.com>",
+  "license": "MIT"
 }

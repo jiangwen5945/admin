@@ -36,12 +36,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
 
 .el-header {
-  padding: 0;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  border-bottom: 1px solid rgba(0,21,41,.08);
 }
 
 .el-main {

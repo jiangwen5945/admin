@@ -163,7 +163,7 @@ export default {
 }
 </script>
   
-<style scoped lang="less">
+<style scoped lang="scss">
 .user-wrap {
   display: flex;
   align-items: center;
@@ -236,8 +236,9 @@ export default {
     margin-left: 14px;
 
     .price {
-      font-size: 24px;
+      font-size: 22px;
       margin-top: 10px;
+      color: #303030;
     }
 
     .desc {

@@ -1,13 +1,13 @@
 import Mock from 'mockjs'
-import homeApi from './mockData/home'
-import userApi from './mockData/user'
-import goodsApi from './mockData/goods'
-import roleApi from './mockData/role'
-import menuApi from './mockData/menu'
-import classApi from './mockData/class'
-import permissionApi from './mockData/permission'
-import authorityApi from './mockData/authority'
-import orderApi from './mockData/order'
+import homeApi from './modules/home'
+import userApi from './modules/user'
+import goodsApi from './modules/goods'
+import roleApi from './modules/role'
+import menuApi from './modules/menu'
+import classApi from './modules/class'
+import permissionApi from './modules/permission'
+import authorityApi from './modules/authority'
+import orderApi from './modules/order'
 
 
 console.log('拓展mockjs', Mock.Random.phone())

@@ -1,0 +1,21 @@
+/* 定义基础色值 */
+:root {
+  --jw-white: #fff;
+  --jw-black: #545c64;
+  --dark-primary-color: #008080;
+  --light-primary-color: #6e7ef5;
+}
+
+/*   light模式主题色 */
+:root .custom-light {
+  --color-background: var(--jw-white);
+  --color-font:  var(--jw-black);
+  --color-active: var(--light-primary-color)
+}
+
+/*   dark模式主题色 */
+:root .custom-dark {
+  --color-background: var(--jw-black);
+  --color-font:  var(--jw-white);
+  --color-active: var(--dark-primary-color)
+}

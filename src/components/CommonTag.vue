@@ -56,7 +56,7 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .tag-container {
     margin-top: -10px;
     margin-bottom: 10px;

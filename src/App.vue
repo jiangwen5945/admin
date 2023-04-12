@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+  <div id="app" :class="'custom-' + this.$store.state.setting.theme">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
+  name: 'App'
 }
 </script>
 

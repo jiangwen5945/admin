@@ -46,13 +46,13 @@ export default {
       menuArray.forEach(el => {
         if (el.children) {
           el.children = el.children.map(item => {
-            item.component = () => import(`../view/${item.url}`)
+            item.component = () => import(`@/view/${item.url}`)
             return item
           })
           fomatMenuArr.push(...el.children)
 
         } else {
-          el.component = () => import(`../view/${el.url}`)
+          el.component = () => import(`@/view/${el.url}`)
           fomatMenuArr.push(el)
         }
       });
