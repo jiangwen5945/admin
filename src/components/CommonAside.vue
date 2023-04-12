@@ -47,13 +47,13 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-    handleUrl(item) {
-      console.log(item);
+    async handleUrl(item) {
       if (this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')) {
-        this.$router.push(item.path)
+        await this.$router.push({ path: item.path, query: { label: item.label }})
       }
-      // 调用面包屑更新
+      // 调用面包屑/导航更新
       this.$store.commit('updateNavList', item)
+      this.$store.commit('updateCrumbs', this.$route)
     }
   },
   computed: {

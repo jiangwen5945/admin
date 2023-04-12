@@ -9,14 +9,12 @@ export const mixins = {
     };
   },
   created() {
-    console.log("我是mixin中的created生命周期函数");
     this.getData() // 获取基础列表数据
     this.initForm = JSON.parse(JSON.stringify(this.form)) // 拷贝一份初始化的表单数据
   },
   methods: {
     // 获取数据
     async getData() {
-      console.log('mixins获取数据');
       const { list, count } = await this.getDataApi()
       this.tableData = list
       this.count = count
@@ -24,7 +22,6 @@ export const mixins = {
 
     // 删除用户
     handleDelete(id) {
-      console.log('mixins删除用户', id);
       this.$confirm('确定删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

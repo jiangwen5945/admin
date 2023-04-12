@@ -3,17 +3,16 @@
     <div class="l-container">
       <el-button icon="el-icon-menu" size="mini" @click="handleBtn" style="margin-right: 20px;"></el-button>
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: item.path }" v-for="item in navList" :key="item.path">
+        <el-breadcrumb-item :to="{ path: item.path }" v-for="item in crumbsList" :key="item.path">
           <span class="nav-text">{{ item.label }}</span>
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-
     <div class="r-container">
       <div class="theme-icon">
         <i class="el-icon-search" @click="handleSearch"/>
-        <i :class="[isFull ? 'el-icon-crop' : 'el-icon-full-screen']" @click="switchFull"/> 
-        <i :class="[theme, theme === 'dark' ? 'el-icon-sunny' : 'el-icon-moon']" @click="changeTheme(theme)" />
+        <i :class="[isFullScreen ? 'el-icon-crop' : 'el-icon-full-screen']" @click="switchFull"/> 
+        <i :class="[theme === 'dark' ? 'el-icon-sunny' : 'el-icon-moon']" @click="changeTheme(theme)" />
       </div>
       <el-dropdown @command="handleCommand">
         <div class="el-dropdown-link avatar-box">
@@ -34,10 +33,10 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      isFull: false
     }
   },
   methods: {
+    // 处理下拉菜单选项中的事件
     handleCommand(command) {
       if (command === 'logout') {
         Cookie.remove('token')  // 退出清除token
@@ -47,54 +46,28 @@ export default {
         this.$router.push('/login')
       }
     },
+    // 折叠侧边菜单栏
     handleBtn() {
       this.$store.commit('handleCollapseMenu')
     },
+    // 切换主题
     changeTheme(currentTheme) {
       const  reverseTheme = currentTheme === 'dark' ? 'light' : 'dark'
       this.$store.commit('setting/changeTheme', reverseTheme)
     },
     // 切换全屏
     switchFull() {
-      if (this.isFull) {
-        document.exitFullScreen && document.exitFullscreen();
-        //兼容火狐
-        if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        }
-        //兼容谷歌等
-        if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        }
-        //兼容IE
-        if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
-      } else {
-        if (document.documentElement.RequestFullScreen) {
-          document.documentElement.RequestFullScreen();
-        }
-        //兼容火狐
-        if (document.documentElement.mozRequestFullScreen) {
-          document.documentElement.mozRequestFullScreen();
-        }
-        //兼容谷歌等可以webkitRequestFullScreen也可以webkitRequestFullscreen
-        if (document.documentElement.webkitRequestFullScreen) {
-          document.documentElement.webkitRequestFullScreen();
-        }
-        //兼容IE,只能写msRequestFullscreen
-        if (document.documentElement.msRequestFullscreen) {
-          document.documentElement.msRequestFullscreen();
-        }
-      }
-      this.isFull = !this.isFull
+      this.$store.commit('setting/setFullScreen')
     },
+    // 处理查询
     handleSearch(){}
   },
   computed: {
     ...mapState({
       navList: state => state.tab.navList,
-      theme: state => state.setting.theme
+      crumbsList: state => state.tab.crumbsList,
+      theme: state => state.setting.theme,
+      isFullScreen: state => state.setting.isFullScreen
     }),
     userInfo() {
       return this.$store.state.tab.userInfo || JSON.parse(Cookie.get('userInfo'))

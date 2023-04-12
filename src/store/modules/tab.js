@@ -2,23 +2,41 @@ import Cookie from 'js-cookie'
 export default {
   state: {
     isCollapse: false, // 控制菜单展开或关闭
+     // 面包屑数组
     navList: [{
       path: '/',
       name: 'HomeView',
       label: '首页',
       icon: 's-home',
       url: 'Home/Home'
-    }], // 面包屑数组
+    }],
+    crumbsList: [{
+      path: '/',
+      name: 'HomeView',
+      label: '首页'
+    }],
     menuArray: [],
     userInfo: ''
   },
   mutations: {
+    
+    updateCrumbs(state, item){
+      const crumb = {
+        path: item.path,
+        name: item.name,
+        label: item.query.label
+      } 
+      if (item.name !== 'HomeView') {
+        state.crumbsList.splice(1,1,crumb)
+      }
+    },
+    // 折叠侧边菜单栏
     handleCollapseMenu(state) {
       state.isCollapse = !state.isCollapse
     },
     // 更新面包屑数据
     updateNavList(state, item) {
-      // 仅在当前位置不为首页且在面包屑列表中不存在时添加更新数据
+      // 仅在当前位置不为首页且面包屑列表中不存在时添加更新数据
       if (item.name !== 'home' && state.navList.findIndex(e => e.name === item.name) === -1) {
         state.navList.push(item)
       }

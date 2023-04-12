@@ -10,7 +10,6 @@ import authorityApi from './modules/authority'
 import orderApi from './modules/order'
 
 
-console.log('拓展mockjs', Mock.Random.phone())
 // 首页数据
 Mock.mock('/api/home/getData', homeApi.getStatisticalData)
 
