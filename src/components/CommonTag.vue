@@ -28,10 +28,11 @@ export default {
     methods: {
         ...mapMutations(['closeTag']),
         // 点击tag跳转的功能
-        changeMenu(item) {
-            // this.$router.push({ name: item.name })
+         changeMenu(item) {
+          if(item.name !== this.$route.name) {
             this.$router.push({ path: item.path, query: { label: item.label }})
             this.$store.commit('updateCrumbs', this.$route)
+          }
         },
         // 点击tag删除的功能
         handleClose(item, index) {

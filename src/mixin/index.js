@@ -87,6 +87,7 @@ export const mixins = {
     handleClose() {
       this.form = { ...this.initForm } // 初始化表单
       this.isVisible = false    // 关闭弹窗
+      this.$refs.form.clearValidate()  // 移除表单项的校验结果
     },
   },
 };

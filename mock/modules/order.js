@@ -32,8 +32,8 @@ const mockList = Mock.mock({
     'endTime': '@datetime', // 结束时间
     'closeTime': '@datetime',  // 取消时间
     'evaluationTime': '@datetime', // 评价时间
-    'payType|1': [1,2,3,4], // 支付类型
-    'orderState|1': [0,1,2,3,4], // 订单状态
+    'payType|1': ['1', '2', '3', '4'], // 支付类型
+    'orderState|1': ['0', '1', '2', '3', '4'], // 订单状态
     'postFee|8-12': 8, // 邮费
     'payMoney|50-200': 50, // 支付金额
     'totalMoney|50-200': 50, // 商品总价
@@ -66,12 +66,16 @@ export default {
   },
 
   createOrder: params => {
-    const { className, employeesCount, level } = JSON.parse(params.body)
+    const { orderState, payMoney, payType, receiverContact, receiverMobile, receiverAddress } = JSON.parse(params.body)
     mockList.list.unshift({
-      classId: mockList.list[mockList.list.length - 1].classId + 1,
-      className,
-      employeesCount,
-      level
+      id: Mock.mock('@id'),
+      createTime: Mock.mock('@now'),
+      orderState,
+      payMoney,
+      payType,
+      receiverContact,
+      receiverMobile,
+      receiverAddress
     })
     return {
       code: 200,
@@ -83,14 +87,15 @@ export default {
   },
 
   deleteOrder: (params) => {
-    const { classId } = JSON.parse(params.body)
-    if (!classId) {
+    const { id } = JSON.parse(params.body)
+    console.log('id', id);
+    if (!id) {
       return {
         code: -999,
         message: '参数不正确'
       }
     } else {
-      mockList.list = mockList.list.filter(e => e.classId !== classId)
+      mockList.list = mockList.list.filter(e => e.id !== id)
       return {
         code: 200,
         message: '删除成功',
@@ -102,12 +107,15 @@ export default {
   },
 
   updateOrder: (params) => {
-    const { classId, className, employeesCount, level } = JSON.parse(params.body)
+    const { id, orderState, payMoney, payType, receiverContact, receiverMobile, receiverAddress } = JSON.parse(params.body)
     mockList.list.some(e => {
-      if (e.classId === classId) {
-        e.className = className
-        e.employeesCount = employeesCount
-        e.level = level
+      if (e.id === id) {
+        e.orderState = orderState
+        e.payMoney = payMoney
+        e.payType = payType
+        e.receiverContact = receiverContact
+        e.receiverMobile = receiverMobile
+        e.receiverAddress = receiverAddress
         return true
       }
     })

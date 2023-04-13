@@ -22,7 +22,7 @@ const mockList = Mock.mock({
     'classId|+1': 100,
     'className|+1': ['市场部', '技术部', '仓储部', '财务部'],
     'employeesCount|10-100': 10,
-    'level': 1
+    'level': '1'
   }]
 })
 

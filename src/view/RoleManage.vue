@@ -38,7 +38,7 @@
 
     <!-- 弹出层 -->
     <el-dialog title="新增角色" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
-      <el-form ref="form" :model="form"  label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
         <el-form-item label="角色名称" prop="roleName">
           <el-input v-model.number="form.roleName" autocomplete="off" placeholder="请输入角色名称"></el-input>
         </el-form-item>
@@ -57,7 +57,7 @@
             }"
           />
         </el-form-item>
-        <el-form-item label="是否开启" prop="available">
+        <el-form-item label="是否开启">
           <el-switch
             v-model="form.available"
             :active-value="1"
@@ -77,11 +77,13 @@
 <script>
 import { getRolesList, deleteRole, createRole, updateRole, getAuthorityList } from '../api'
 import { mixins } from "../mixin";
+import rules from '@/utils/rules';
 export default {
   name: 'RoleManage',
   mixins:[mixins],
   data() {
     return {
+      rules,
       authorityList:[], // 树形控件权限列表
       form: {
         roleId: null,

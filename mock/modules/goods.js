@@ -84,7 +84,7 @@ const topCategoryList = Mock.mock({
         }]
       ],
       "name|+1": ["冻品类", "调味品", "药材/干货"],
-      "level": 1,
+      "level": '1',
       "productCount|100-500": 100,
       "productUnit": "件",
       "navStatus|1": [0, 1],
@@ -108,7 +108,7 @@ const subCategoryList = Mock.mock({
         id: 10000 + Mock.mock('@increment')
       }],
       "name|+1": ['小笼包1', '小笼包2', '小笼包3'],
-      "level": 2,
+      "level": '2',
       "productCount|100-500": 100,
       "productUnit": "件",
       "navStatus|1": [0, 1],
@@ -219,20 +219,25 @@ export default {
 
   createGoodsCategory: (data) => {
     const current = JSON.parse(data.body)
-    console.log('current', current);
     switch (current.level) {
-      case 1:
+      case '1':
         topCategoryList.list.push({
           ...current,
           id: topCategoryList.list[topCategoryList.list.length - 1].id + 1000
         })
         break;
-      case 2:
+      case '2':
         subCategoryList.list.push({
           ...current,
           id: subCategoryList.list[subCategoryList.list.length - 1].id + 1
         })
         break;
+      default: 
+        return {
+          code: 400,
+          message: '参数不正确',
+          result: null
+        };
     }
     return {
       code: 200,
@@ -249,13 +254,20 @@ export default {
         message: '参数不正确'
       }
     } else {
+      console.log('1',  typeof level);
       switch (level) {
-        case 1:
+        case '1':
           topCategoryList.list = topCategoryList.list.filter(e => e.id !== id)
           break;
-        case 2:
+        case '2':
           subCategoryList.list = subCategoryList.list.filter(e => e.id !== id)
           break;
+        default: 
+          return {
+            code: 400,
+            message: '参数不正确',
+            result: null
+          };
       }
       return {
         code: 200,
@@ -268,20 +280,32 @@ export default {
   updateGoodsCategory: (data) => {
     const current = JSON.parse(data.body)
     switch (current.level) {
-      case 1:
+      case '1':
         topCategoryList.list.forEach(e => {
+          // 一级分类同级变更
           if (e.id === current.id) {
             e = Object.assign(e, current)
           }
         })
         break;
-      case 2:
+      case '2':
+        console.log(2,current);
+        // 二级分类同级变更
         subCategoryList.list.forEach(e => {
+          console.log('二级分类变更',e.id ,current.id);
           if (e.id === current.id) {
             e = Object.assign(e, current)
           }
         })
+        // 一级分类变更为二级分类
+
         break;
+      default: 
+        return {
+          code: 400,
+          message: '参数不正确',
+          result: null
+        };
     }
 
     return {

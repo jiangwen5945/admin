@@ -122,3 +122,21 @@ export const updateOrder = data => {
   return http.post('/order/edit', data)
 }
 
+// 文章
+export const getArticleList = params => {
+  return http.get('/article/getArticleList', {params})
+}
+
+export const deleteArticle = data => {
+  return http.post('/article/del', data)
+}
+
+export const createArticle = data => {
+  return http.post('/article/add', data)
+}
+
+export const updateArticle = data => {
+  return http.post('/article/edit', data)
+}
+
+

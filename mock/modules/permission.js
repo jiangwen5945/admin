@@ -71,6 +71,26 @@ export default {
               label: '订单管理',
               icon: 's-claim',
               url: 'OrderManage.vue'
+            },
+            {
+              label: '文章管理',
+              icon: 'files',
+              children: [
+                {
+                  path: '/ArticleList',
+                  name: 'articleList',
+                  label: '文章列表',
+                  icon: 'document-copy',
+                  url: 'article/ArticleList.vue'
+                },
+                {
+                  path: '/CreateArticle',
+                  name: 'CreateArticle',
+                  label: '创建文章',
+                  icon: 'edit-outline',
+                  url: 'article/CreateArticle.vue'
+                }
+              ]
             }
           ],
           userInfo: {

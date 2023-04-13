@@ -8,6 +8,7 @@ import classApi from './modules/class'
 import permissionApi from './modules/permission'
 import authorityApi from './modules/authority'
 import orderApi from './modules/order'
+import articleApi from './modules/article'
 
 
 // 首页数据
@@ -66,5 +67,11 @@ Mock.mock('/api/order/del', 'post', orderApi.deleteOrder)
 Mock.mock('/api/order/add', 'post', orderApi.createOrder)
 Mock.mock('/api/order/edit', 'post', orderApi.updateOrder)
 
+
+// 文章管理
+Mock.mock(/api\/article\/getArticleList/, articleApi.getArticleList)
+Mock.mock('/api/article/del', 'post', articleApi.deleteArticle)
+Mock.mock('/api/article/add', 'post', articleApi.createArticle)
+Mock.mock('/api/article/edit', 'post', articleApi.updateArticle)
 
 

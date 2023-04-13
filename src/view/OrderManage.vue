@@ -27,11 +27,11 @@
         <el-table-column prop="orderState" label="订单状态">
           <template #default="scope">
             <el-button type="text" @click="handleOrderState(scope.row)">
-              {{ scope.row.orderState === 0 ? '待付款' : '' }}
-              {{ scope.row.orderState === 1 ? '待发货' : '' }}
-              {{ scope.row.orderState === 2 ? '待签收' : '' }}
-              {{ scope.row.orderState === 3 ? '待评价' : '' }}
-              {{ scope.row.orderState === 4 ? '已完成' : '' }}
+              {{ scope.row.orderState == 0 ? '待付款' : '' }}
+              {{ scope.row.orderState == 1 ? '待发货' : '' }}
+              {{ scope.row.orderState == 2 ? '待签收' : '' }}
+              {{ scope.row.orderState == 3 ? '待评价' : '' }}
+              {{ scope.row.orderState == 4 ? '已完成' : '' }}
             </el-button>
           </template>
         </el-table-column>
@@ -40,10 +40,10 @@
           <el-table-column prop="payMoney" label="支付金额"></el-table-column>
           <el-table-column prop="payType" label="支付类型">
             <template #default="scope">
-              {{ scope.row.payType === 1 ? '支付宝' : '' }}
-              {{ scope.row.payType === 2 ? '微信' : '' }}
-              {{ scope.row.payType === 3 ? '银联' : '' }}
-              {{ scope.row.payType === 4 ? '货到付款' : '' }}
+              {{ scope.row.payType == 1 ? '支付宝' : '' }}
+              {{ scope.row.payType == 2 ? '微信' : '' }}
+              {{ scope.row.payType == 3 ? '银联' : '' }}
+              {{ scope.row.payType == 4 ? '货到付款' : '' }}
             </template>
           </el-table-column>
         </el-table-column>
@@ -54,39 +54,49 @@
           <el-table-column prop="receiverMobile" label="收件人电话"></el-table-column>
           <el-table-column prop="receiverAddress" label="收件人地址"></el-table-column>
         </el-table-column>
-
-        <!-- <el-table-column prop="skus" label="订单商品" ></el-table-column> -->
-
-
-
-
-
-        <!-- <el-table-column prop="authority" label="拥有权限" width="180"></el-table-column> -->
         <!-- 操作 -->
         <el-table-column label="操作" width="150" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="danger" size="mini" @click="handleDelete({ classId: scope.row.classId })">删除</el-button>
+            <el-button type="danger" size="mini" @click="handleDelete({ id: scope.row.id })">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
     <!-- 表单弹出层 -->
-    <el-dialog title="新增部门" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="部门名称" prop="className">
-          <el-input v-model="form.className" autocomplete="off" placeholder="请输入部门名称"></el-input>
-        </el-form-item>
-        <el-form-item label="部门级别" prop="level">
-          <el-select v-model="formatLevel" placeholder="请选择部门级别" style="width: 100%;">
-            <el-option label="一级" value="1" />
-            <el-option label="二级" value="2" />
+    <el-dialog title="新增订单" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="订单状态" prop="orderState">
+          <el-select v-model="form.orderState" placeholder="请选择订单状态"  style="width: 100%;">
+            <el-option label="待付款" value="0"/>
+            <el-option label="待发货" value="1"/>
+            <el-option label="待签收" value="2"/>
+            <el-option label="待评价" value="3"/>
+            <el-option label="已完成" value="4"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="人员数量" prop="employeesCount">
-          <el-input v-model.number="form.employeesCount" autocomplete="off" placeholder="请输入人员数量"></el-input>
+        <el-form-item label="支付金额" prop="payMoney">
+          <el-input v-model="form.payMoney" autocomplete="off" placeholder="请输入支付金额"></el-input>
         </el-form-item>
+        <el-form-item label="支付方式" prop="payType">
+          <el-select v-model="form.payType" placeholder="请选择支付方式"  style="width: 100%;">
+            <el-option label="支付宝" value="1"/>
+            <el-option label="微信" value="2"/>
+            <el-option label="银联" value="3"/>
+            <el-option label="货到付款" value="4"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="收件人姓名" prop="receiverContact">
+          <el-input v-model="form.receiverContact" autocomplete="off" placeholder="请输入收件人姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="收件人电话" prop="receiverMobile">
+          <el-input v-model="form.receiverMobile" autocomplete="off" placeholder="请输入收件人电话"></el-input>
+        </el-form-item>
+        <el-form-item label="收件人地址" prop="receiverAddress">
+          <el-input v-model="form.receiverAddress" autocomplete="off" placeholder="请输入收件人地址"></el-input>
+        </el-form-item>
+      
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -109,27 +119,17 @@
 <script>
 import { getOrderList, deleteOrder, createOrder, updateOrder } from '../api'
 import { mixins } from "../mixin";
+import rules from '@/utils/rules';
 export default {
   name: 'OrderManage',
   mixins: [mixins],
-  computed: {
-    formatLevel: {
-      get() {
-        if (!this.form.level) return ''
-        return this.form.level === 1 ? '一级' : '二级'
-      },
-      set(newValue) {
-        this.form.level = newValue === '1' ? 1 : 2
-      }
-    }
-  },
   mounted() {
     this.initActivities = JSON.parse(JSON.stringify(this.activities))
   },
   data() {
     return {
+      rules,
       isVisible2: false, // 订单状态弹出层
-      // 分页参数
       queryParam: {
         page: 1,
         limit: 10,
@@ -138,6 +138,7 @@ export default {
       form: {
         id: '',
         orderState: '',
+        payType:'',
         postFee:'',
         payMoney:'',
         receiverContact:'',

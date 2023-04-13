@@ -18,7 +18,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="level" label="分类等级"></el-table-column>
-        <el-table-column prop="parentId" label="上级分类">
+        <el-table-column prop="parentId" label="父级分类">
           <template slot-scope="scope">
            {{ scope.row.parentId ? getCategoryName(scope.row.parentId)  : '无' }}
           </template>
@@ -48,7 +48,7 @@
     </div>
     <!-- 弹出层 -->
     <el-dialog title="新增商品分类" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
-      <el-form ref="form" :model="form"  label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules"  label-width="100px">
         <!-- 分类名称 -->
         <el-form-item label="分类名称"  prop="name">
           <el-input v-model="form.name"  placeholder="请输入分类名称"></el-input>
@@ -56,12 +56,12 @@
         <!-- 分类等级 -->
         <el-form-item label="分类等级"  prop="level">
           <el-select v-model="form.level" placeholder="请选择分类等级"  style="width: 100%;">
-            <el-option label="一级分类" :value="1"></el-option>
-            <el-option label="二级分类" :value="2"></el-option>
+            <el-option label="一级分类" value="1"></el-option>
+            <el-option label="二级分类" value="2"></el-option>
           </el-select>
         </el-form-item>
         <!-- 父级分类 -->
-        <el-form-item label="父级分类"  prop="parentId" v-if="form.level !== 1">
+        <el-form-item label="父级分类"  prop="parentId" v-if="form.level !== '1'">
           <el-select 
             v-model="form.parentId" 
             placeholder="请选择父级分类"
@@ -107,36 +107,19 @@
 <script>
 import { getGoodsCategory, deleteGoodsCategory, createGoodsCategory, updateGoodsCategory } from '../../api'
 import { mixins } from "@/mixin";
+import rules from '@/utils/rules'
 export default {
   name: 'GoodsCategory',
   mixins: [mixins],
   computed:{
     topCategoryList(){
-      return this.tableData.filter(e=> e.level === 1 )
+      return this.tableData.filter(e=> e.level == 1 )
     }
   },
   data() {
     return {
       // 表单验证规则
-      // rules: {
-      //   name: [
-      //     { required: true, message: '请输入活动名称', trigger: 'blur' },
-      //     { min: 1, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-      //   ],
-      //   age: [
-      //     { required: true, message: '请输入年龄' },
-      //     { type: 'number', message: '年龄必须为数字值' }
-      //   ],
-      //   sex: [
-      //     { required: true, message: '请选择性别', trigger: 'change' }
-      //   ],
-      //   birth: [
-      //     { required: true, message: '请选择日期', trigger: 'change' }
-      //   ],
-      //   addr: [
-      //     { required: true, message: '请输入地址', trigger: 'blur' }
-      //   ],
-      // },
+      rules,
       // 分页参数
       queryParam: {
         page: 1,

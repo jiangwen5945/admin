@@ -53,7 +53,7 @@
 
     <!-- 弹出层 -->
     <el-dialog title="新增菜单" :visible.sync="isVisible" :before-close="handleClose"  center width="30%">
-      <el-form ref="form" :model="form"  label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
         <el-form-item label="菜单级别" prop="level">
           <el-select v-model="formatLevel" placeholder="请选择菜单级别"  style="width: 100%;">
             <el-option label="一级菜单" value="1"/>
@@ -61,14 +61,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name">
-          <el-input v-model.number="form.name" placeholder="请输入菜单名称"></el-input>
+          <el-input v-model.number="form.name" placeholder="请输入名称"></el-input>
         </el-form-item>
         <el-form-item label="权限角色" prop="roles">
           <el-checkbox-group v-model="form.roles" size="mini">
             <el-checkbox v-for="item in roleList" :label="item.roleName" :key="item.roleId"/>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="是否开启" prop="available">
+        <el-form-item label="是否开启">
           <el-switch
             v-model="form.available"
             :active-value="1"
@@ -90,6 +90,7 @@
 <script>
 import { getMenuList, deleteMenu, createMenu, updateMenu, getRolesList } from '../api'
 import { mixins } from "../mixin";
+import rules from '@/utils/rules';
 export default {
   name: 'MenuManage',
   mixins:[mixins],
@@ -117,7 +118,8 @@ export default {
         roles: [],
         level: '',
         available: false,
-      }
+      },
+      rules: rules
     };
   },
   mounted() {

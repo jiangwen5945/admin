@@ -13,8 +13,7 @@ export default {
 <style>
 html,
 body,
-#app,
-p {
+#app{
   margin: 0;
   padding: 0;
   width: 100%;

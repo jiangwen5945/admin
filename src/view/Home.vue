@@ -234,6 +234,12 @@ export default {
     flex-direction: column;
     justify-content: center;
     margin-left: 14px;
+    p{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
 
     .price {
       font-size: 22px;

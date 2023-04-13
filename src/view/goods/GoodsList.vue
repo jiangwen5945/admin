@@ -6,7 +6,7 @@
         <el-button type="primary" size="medium" @click="handleAdd">+新增</el-button>
       </div>
       <div class="right">
-        <el-input placeholder="请输入用户名称" v-model="queryParam.name"></el-input>
+        <el-input placeholder="请输入查询内容" v-model="queryParam.name"></el-input>
         <el-button type="primary" size="medium" @click="handleQuery" style="margin-left: 10px;">查询</el-button>
       </div>
     </div>
@@ -83,7 +83,7 @@
 
     <!-- 弹出层 -->
     <el-dialog title="新增商品" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="80px" :rules="rules">
         <!-- 商品名称 -->
         <el-form-item label="商品名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入商品名称"></el-input>
@@ -96,7 +96,7 @@
 
         <!-- 商品分类 -->
         <el-form-item label="商品分类" prop="category">
-          <el-cascader v-model="form.category" style="width: 100%;" :props="props">
+          <el-cascader v-model="form.category" style="width: 100%;" :props="props" clearable>
           </el-cascader>
         </el-form-item>
 
@@ -130,7 +130,7 @@
         </el-form-item>
 
         <!-- 商品图片 -->
-        <el-form-item label="商品图片" prop="url">
+        <el-form-item label="商品图片" prop="fileList">
           <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card"
             :file-list="form.fileList" :on-remove="handleRemove" :on-success="handleUploadSuccess"
             :before-upload="handleBeforUpload" ref="uploadRef">
@@ -139,7 +139,7 @@
         </el-form-item>
 
         <!-- 是否上架 -->
-        <el-form-item label="是否上架" prop="label">
+        <el-form-item label="是否上架">
           <el-switch v-model="form.available" :active-value="1" :inactive-value="0">
           </el-switch>
         </el-form-item>
@@ -156,6 +156,7 @@
 <script>
 import { getGoodsList, deleteGoods, createGoods, updateGoods, getGoodsCategory } from '../../api'
 import { mixins } from "@/mixin";
+import rules from '../../utils/rules'
 export default {
   name: 'GoodsList',
   mixins: [mixins],
@@ -211,6 +212,7 @@ export default {
         limit: 10,
         name: ''
       },
+      rules: rules,
       categoryList: [],
       isComplete: true // 文件上传是否完成
     };
