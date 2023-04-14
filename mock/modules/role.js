@@ -50,7 +50,6 @@ export default {
 
   createRole: (params) => {
     const { roleName, available, authority } = JSON.parse(params.body)
-    console.log('参数', JSON.parse(params.body));
     mockList.list.unshift({
       roleId: mockList.list[mockList.list.length - 1].roleId + 100000,
       roleName,

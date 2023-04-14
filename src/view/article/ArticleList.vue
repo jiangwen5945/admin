@@ -130,7 +130,6 @@ export default {
   methods: {
     // 基础增删改查
     getDataApi() {
-      console.log('基础增删改查');
       return getArticleList(this.queryParam)
     },
     deleteApi(id) {

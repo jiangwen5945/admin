@@ -71,8 +71,7 @@ export default {
   },
   methods: {
     // 上传文件之前
-    handleBeforUpload(file) {
-      console.log('上传文件之前', file);
+    handleBeforUpload() {
       this.isComplete = false
     },
 
@@ -86,7 +85,6 @@ export default {
 
     // 文件列表移除文件时
     handleRemove(file, fileList) {
-      console.log('文件列表移除文件时', file, fileList);
       this.form.fileList = JSON.parse(JSON.stringify(fileList))
     },
 

@@ -63,7 +63,6 @@ export default {
    */
   createUser: config => {
     const { userName,nickName, addr, birth, sex,roles } = JSON.parse(config.body)
-    console.log(JSON.parse(config.body))
     List.unshift({
       id: Mock.Random.guid(),
       userName,

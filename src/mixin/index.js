@@ -63,7 +63,6 @@ export const mixins = {
       this.$refs.form.validate( async valid => {
         // 当表单验证通过
         if (valid) {
-          console.log('当前表单数据', this.form)
           switch (this.modalType) {
             case 0:
               await this.createApi(this.form)

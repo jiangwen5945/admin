@@ -18,7 +18,6 @@ http.interceptors.request.use(function (config) {
 http.interceptors.response.use(function (response) {
   // 对响应数据做些什么
   if (response.status === 200) {
-    console.log('响应拦截器', response);
     const { code, result, message } = response.data
     if (code === 200) {
       return result

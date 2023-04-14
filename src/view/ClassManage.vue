@@ -71,17 +71,6 @@ import rules from '@/utils/rules';
 export default {
   name: 'ClassManage',
   mixins:[mixins],
-  computed:{
-    // formatLevel: {
-    //   get() {
-    //     if(!this.form.level) return ''
-    //     return this.form.level === 1 ? '一级' : '二级'
-    //   },
-    //   set(newValue){
-    //     this.form.level = newValue === '1' ? 1 : 2
-    //   }
-    // }
-  },
   data() {
     return {
       rules,
@@ -103,10 +92,6 @@ export default {
       initForm: null
     };
   },
-  mounted() {
-    // this.getData(getClassList)
-    // this.initForm = JSON.parse(JSON.stringify(this.form))
-  },
   methods: {
     getDataApi() {
       return getClassList(this.queryParam)
@@ -119,65 +104,7 @@ export default {
     },
     updateApi (data) {
       return updateClass(data)
-    },
-
-    // 获取数据
-    // async getData() {
-    //   const {list, count} = await getClassList()
-    //   this.tableData = list
-    //   this.count = count
-    //   console.log('获取', this.tableData)
-    // },
-    
-    // 提交表单
-    // submit() {
-    //   this.$refs.form.validate(async valid => {
-    //     // 当表单验证通过
-    //     if (valid) {
-    //       console.log('当前表单数据', this.form)
-    //       switch (this.modalType) {
-    //         case 0:
-    //           await createClass(this.form)
-    //           this.getData() // 重新获取列表数据
-    //           break;
-    //         case 1:
-    //           console.log('更新', this.modalType)
-    //           await updateClass(this.form)
-    //           this.getData() // 重新获取列表数据
-    //           break;
-    //       }
-    //       this.handleClose()  // 关闭弹窗
-    //       this.$message({
-    //         type: 'success',
-    //         message: this.modalType === 0 ? '添加成功' : '编辑成功'
-    //       });
-    //     }
-    //     console.log('valid', valid)
-    //   })
-    // },
-
-    // 关闭弹窗
-    // handleClose() {
-    //   this.form = {...this.initForm} // 初始化表单
-    //   this.isVisible = false    // 关闭弹窗
-    // },
-    // 添加
-    // handleAdd() {
-    //   this.isVisible = true
-    //   this.modalType = 0
-    // },
-    // 编辑
-    // handleEdit(row) {
-    //   this.isVisible = true
-    //   this.modalType = 1
-    //   // 注意需要对当前行数据进行深拷贝，否则会出错
-    //   this.form = JSON.parse(JSON.stringify(row))
-    // },
-    // 删除
-    // handleDelete(row) {
-    //   const { classId } = row
-    //   this.mixinDelete(deleteClass, { classId })
-    // }
+    }
   }
 }
 </script>

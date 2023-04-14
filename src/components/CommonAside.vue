@@ -2,9 +2,7 @@
   <el-menu 
       router
       :default-active='$route.name'
-      class="aside-menu" 
-      @open="handleOpen" 
-      @close="handleClose"
+      class="aside-menu"
       :collapse="isCollapse"
   > 
       <!-- 菜单标题 -->
@@ -38,12 +36,6 @@
 import Cookie from 'js-cookie'
 export default {
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     handleUrl(item) {
       // if (this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')) {
       //   this.$router.push({ path: item.path, query: { label: item.label }})

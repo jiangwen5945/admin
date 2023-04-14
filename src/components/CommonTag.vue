@@ -34,7 +34,6 @@ export default {
       if (this.$route.name != item.name) return
       // 如果标签是当前页面,且在最后一个时跳转上一个路由，否则跳转下一个路由
       if (this.tags.length === index) {
-        console.log('表示的是删除的最后一项')
         this.$router.push({
           name: this.tags[index - 1].name
         })
