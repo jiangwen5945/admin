@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <div class="table-header">
       <div class="left">
-        <el-button type="primary" size="medium" @click="toCreatePage">+新增</el-button>
+        <el-button type="primary" size="medium" @click="toCreatePage(null)">+新增</el-button>
       </div>
       <div class="right">
         <el-input placeholder="请输入查询内容" v-model="queryParam.name"></el-input>
@@ -13,10 +13,10 @@
 
     <!-- 表格内容 -->
     <div class="table-content">
-      <el-table :data="tableData" stripe :default-sort="{ prop: 'id', order: 'descending' }">
+      <el-table :data="tableData" stripe :default-sort="{ prop: 'createTime', order: 'descending' }">
         <el-table-column type="selection" width="55" />
         <!-- 文章ID -->
-        <el-table-column prop="id" label="文章编号"></el-table-column>
+        <el-table-column prop="id" label="文章编号" sortable></el-table-column>
 
         <!-- 文章标题 -->
         <el-table-column prop="title" label="文章标题"></el-table-column>
@@ -25,73 +25,39 @@
         <el-table-column prop="author" label="作者"></el-table-column>
        
         <!-- 日期 -->
-        <el-table-column prop="createTime" label="日期"></el-table-column>
+        <el-table-column prop="createTime" label="日期" sortable></el-table-column>
         <!-- 评分 -->
-        <el-table-column prop="score" label="评分">
+        <el-table-column prop="score" label="评分" sortable>
           <template slot-scope="scope">
-           <i class="el-icon-star-on" v-for="item in Number(scope.row.score)" :key="item"></i>
+            <span v-if="scope.row.score">
+              <i class="el-icon-star-on" v-for="item in Number(scope.row.score)" :key="item"></i>
+            </span>
+            <span v-else>暂无评分</span>
           </template>
         </el-table-column>
 
         <!-- 状态 -->
-        <el-table-column prop="status" label="状态">
+        <el-table-column prop="status" label="状态" sortable>
           <template slot-scope="scope">
-            <el-switch :active-value="1" :inactive-value="0" v-model="scope.row.available"></el-switch>
+            <el-switch :active-value="1" :inactive-value="0" v-model="scope.row.status"></el-switch>
           </template>
         </el-table-column>
-      
+
         <!-- 操作 -->
         <el-table-column label="操作" width="160">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+            <el-button size="mini" @click="toCreatePage(scope.row)">编辑</el-button>
             <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
 
+
     <!-- 分页 -->
     <el-pagination layout="prev, pager, next" :total="count" class="pagination" @current-change="handleCurrentChange"
       :hide-on-single-page="true">
     </el-pagination>
-
-    <!-- 弹出层 -->
-    <el-dialog :title="modalType ? '修改文章':'新增文章'" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <!-- 文章名称 -->
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
-        </el-form-item>
-
-        <!-- 作者 -->
-        <el-form-item label="作者" prop="author">
-          <el-input v-model="form.author" placeholder="请输入文章作者"></el-input>
-        </el-form-item>
-
-        <!-- 评分 -->
-        <el-form-item label="评分" prop="score">
-          <el-select v-model="form.score" placeholder="请选择文章评分"  style="width: 100%;">
-            <el-option label="★" value="1"></el-option>
-            <el-option label="★★" value="2"></el-option>
-            <el-option label="★★★" value="3"></el-option>
-            <el-option label="★★★★" value="4"></el-option>
-            <el-option label="★★★★★" value="5"></el-option>
-          </el-select>
-        </el-form-item>
-
-
-        <!-- 状态 -->
-        <el-form-item label="是否上架" prop="status">
-          <el-switch v-model="form.status" :active-value="1" :inactive-value="0">
-          </el-switch>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="submit">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
  
@@ -152,8 +118,10 @@ export default {
     handleQuery() {
       this.getData() //请求列表数据
     },
-    toCreatePage(){
-      this.$router.push({ path: 'CreateArticle'})
+    toCreatePage(row){
+      console.log('params', row);
+      // const params = 
+      this.$router.push({ path: 'CreateArticle',query:{...row}})
       this.$store.commit('updateNavList', {
         path: '/CreateArticle',
         name: 'CreateArticle',

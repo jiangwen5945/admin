@@ -146,11 +146,13 @@ export default {
     parentId:[
       { required: true, message: '内容不能为空', trigger: 'blur' }
     ],
-
     author:[
       { required: true, message: '内容不能为空', trigger: 'blur' }
     ],
     score:[
+      { required: true, message: '内容不能为空', trigger: 'blur' }
+    ],
+    content:[
       { required: true, message: '内容不能为空', trigger: 'blur' }
     ]
 }

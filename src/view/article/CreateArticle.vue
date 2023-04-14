@@ -1,26 +1,18 @@
 <template>
   <div class="page">
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <!-- 文章标题 -->
       <el-form-item label="标题" prop="title">
         <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
       </el-form-item>
 
       <!-- 文章标题 -->
-      <el-form-item label="作者" prop="title">
-        <el-input v-model="form.title" placeholder="请输入文章标题"></el-input>
-      </el-form-item>
-
-      <!-- 类型 -->
-      <el-form-item label="类型" prop="status">
-        <el-select v-model="form.level" placeholder="请选择分类等级" style="width: 100%;">
-          <el-option label="一级分类" :value="1"></el-option>
-          <el-option label="二级分类" :value="2"></el-option>
-        </el-select>
+      <el-form-item label="作者" prop="author">
+        <el-input v-model="form.author" placeholder="请输入文章标题"></el-input>
       </el-form-item>
 
       <!-- 封页图片 -->
-      <el-form-item label="封页图片" prop="author">
+      <el-form-item label="封页图片" prop="fileList">
         <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card"
           :file-list="form.fileList" :on-remove="handleRemove" :on-success="handleUploadSuccess"
           :before-upload="handleBeforUpload" ref="uploadRef">
@@ -28,25 +20,30 @@
         </el-upload>
       </el-form-item>
 
-      <!-- 内容 -->
-      <el-form-item label="内容" prop="content">
-        <quillEditor
-          class="editor"
-          @change="onEditorChange($event)"
-          ref="quill"
-          v-model="form.content"
-          :options="editorOption"
-        />
+       <!-- 是否上架 -->
+       <el-form-item label="是否上架" prop="status">
+        <el-switch v-model="form.status" :active-value="1" :inactive-value="0">
+        </el-switch>
       </el-form-item>
 
+      <!-- 内容 -->
+      <el-form-item label="内容" prop="content">
+        <quillEditor class="editor" @change="onEditorChange($event)" ref="quill" v-model="form.content"
+          :options="editorOption" />
+      </el-form-item>
 
+      <el-form-item class="footer-wrapper">
+        <el-button @click="save" :disabled="!isComplete">保存草稿</el-button>
+        <el-button type="primary" @click="submit" :disabled="!isComplete">提交</el-button>
+      </el-form-item>
     </el-form>
-
   </div>
 </template>
  
 <script>
+import rules from "@/utils/rules";
 import { quillEditor } from "vue-quill-editor";
+import { createArticle, updateArticle } from '../../api'
 // require styles
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -56,10 +53,18 @@ export default {
   components: {
     quillEditor
   },
+  created(){
+    if(this.$route.query.id){
+      this.currentType = 1
+    }
+    console.log(this.$route.query);
+    this.form = Object.assign( this.form, this.$route.query)
+  },
   data() {
     return {
       form: {
-        content:'',
+        status: 0,
+        content: '',
         fileList: [], // 上传完成文件地址数组（编辑回显时需要）
       },
       isComplete: true, // 文件上传是否完成
@@ -67,6 +72,8 @@ export default {
         theme: "snow",
         placeholder: "请输入正文",
       },
+      rules,
+      currentType: 0
     };
   },
   methods: {
@@ -88,7 +95,36 @@ export default {
       this.form.fileList = JSON.parse(JSON.stringify(fileList))
     },
 
-    onEditorChange(){}
+    onEditorChange() { },
+    save() {
+      console.log('保存草稿');
+    },
+    submit() {
+      const cloneForm = JSON.parse(JSON.stringify(this.form))
+      console.log('submit', cloneForm);
+      this.$refs.form.validate(async valid => {
+        // 当表单验证通过
+        if (valid) {
+          switch (this.currentType) {
+            case 0:  // 新建
+              await createArticle(cloneForm)
+              this.$refs.form.resetFields() // 表单进行重置
+              this.$router.push({ path: 'ArticleList' })
+              break;
+            case 1:  // 编辑
+              await updateArticle(cloneForm)
+              this.$refs.form.resetFields() // 表单进行重置
+              this.$router.push({ path: 'ArticleList' })
+              break;
+          }
+          this.$message({
+            type: 'success',
+            message: this.currentType === 0 ? '添加成功' : '编辑成功'
+          });
+        }
+      })
+    }
+
 
   }
 }
@@ -98,9 +134,19 @@ export default {
 .editor {
   line-height: normal !important;
   height: 350px;
-  p{
+
+  p {
     line-height: 1.5em;
   }
+}
+
+.footer-wrapper {
+  button {
+    width: 200px;
+  }
+
+  text-align: center;
+  margin-top: 80px;
 }
 </style>
  

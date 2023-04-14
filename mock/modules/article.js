@@ -22,7 +22,7 @@ const mockList = Mock.mock({
     'createTime': '@datetime', 
     'author': '@name', 
     'score|1': ['1','2','3','4','5'],
-    'status|0-1': 0,
+    'status|0-1': 1,
     'title': '@ctitle'
   }]
 })
@@ -46,13 +46,14 @@ export default {
   },
 
   createArticle: params => {
-    const { author, title, status, score } = JSON.parse(params.body)
+    const { author, title, fileList, content, status} = JSON.parse(params.body)
     mockList.list.unshift({
-      id: mockList.list[mockList.list.length - 1].id + 1,
+      id: Mock.mock('@id'),
       author,
       title,
+      fileList,
+      content,
       status,
-      score,
       createTime: Mock.mock('@now')
     })
     return {
@@ -84,13 +85,14 @@ export default {
   },
 
   updateArticle: (params) => {
-    const { id, author, title, status, score } = JSON.parse(params.body)
+    const { id, author, title, status, fileList, content} = JSON.parse(params.body)
     mockList.list.some(e => {
       if (e.id === id) {
         e.author = author
         e.title = title
+        e.fileList = fileList
+        e.content = content
         e.status = status
-        e.score = score
         return true
       }
     })
