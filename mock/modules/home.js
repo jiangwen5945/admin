@@ -62,7 +62,6 @@ const salesList = Mock.mock({
 
 export default {
   getStatisticalData: () => {
-    console.log(salesList);
     return {
       code: 200,
       message: 'success',

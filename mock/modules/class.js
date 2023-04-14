@@ -34,7 +34,6 @@ export default {
       return true
     })
     const pageList = classList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-    console.log('pageList', pageList);
     return {
       code: 200,
       message: "success",
@@ -63,7 +62,6 @@ export default {
   },
    
   deleteClass: (params) => {
-    console.log('del', params);
     const { classId } = JSON.parse(params.body)
     if (!classId) {
       return {
@@ -84,7 +82,6 @@ export default {
 
   updateClass: (params) => {
     const { classId, className, employeesCount, level } = JSON.parse(params.body)
-    console.log(classId, className, employeesCount, level);
     mockList.list.some(e => {
       if (e.classId === classId) {
         e.className = className

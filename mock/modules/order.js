@@ -88,7 +88,6 @@ export default {
 
   deleteOrder: (params) => {
     const { id } = JSON.parse(params.body)
-    console.log('id', id);
     if (!id) {
       return {
         code: -999,
