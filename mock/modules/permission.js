@@ -1,10 +1,11 @@
 import Mock from 'mockjs'
 export default {
   getMenu: config => {
-    const { username, password } = JSON.parse(config.body)
+    const { userName, passWord } = JSON.parse(config.body)
+    console.log('先判断用户是否存在',userName, passWord);
     // 先判断用户是否存在
     // 判断账号和密码是否对应
-    if (username === 'admin' && password === 'admin') {
+    if (userName === 'admin' && passWord === 'admin123') {
       return {
         code: 200,
         message: 'success',
@@ -102,7 +103,7 @@ export default {
           message: '获取成功'
         }
       }
-    } else if (username === 'xiaoxiao' && password === 'xiaoxiao') {
+    } else if (userName === 'xiaoxiao' && passWord === 'xiaoxiao') {
       return {
         code: 200,
         message: 'success',
@@ -110,17 +111,31 @@ export default {
           menu: [
             {
               path: '/home',
-              name: 'HomeView',
+              name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'Home.vue'
+              url: 'HomeView.vue'
             },
             {
-              path: '/video',
-              name: 'video',
-              label: '商品管理',
-              icon: 'video-play',
-              url: 'Mall.vue'
+              path: '/user',
+              name: 'user',
+              label: '用户管理',
+              icon: 'user',
+              url: 'UserManage.vue'
+            },
+            {
+              path: '/menu',
+              name: 'menu',
+              label: '菜单管理',
+              icon: 'turn-off',
+              url: 'MenuManage.vue'
+            },
+            {
+              path: '/role',
+              name: 'role',
+              label: '角色管理',
+              icon: 's-check',
+              url: 'RoleManage.vue'
             }
           ],
           userInfo: {

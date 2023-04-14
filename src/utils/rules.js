@@ -10,32 +10,40 @@ const validate = {
     if (!/^[a-zA-Z]\w{5,19}$/.test(value)) return '字母开头且6-20个字符'
     return true
   },
-  password (value) {
-    if (!value) return '密码'
-    if (!/^\w{6,24}$/.test(value)) return '密码是6-24个字符'
-    return true
-  },
-  mobile (value) {
-    if (!value) return ('手机号码')
-    if (!/^1[3-9]\d{9}$/.test(value)) return ('手机号格式错误')
-    return true
-  },
-  code (value) {
-    if (!value) return '验证码'
-    if (!/^\d{6}$/.test(value)) return '验证码是6个数字'
-    return true
-  },
-  isAgree (value) {
-    if (!value) return '请勾选同意用户协议'
-    return true
+  passWord(rule, value, callback) {
+    if (value === '')  callback(new Error('密码不能为空'));
+    if (!/^\w{6,24}$/.test(value)) callback(new Error('密码是6-24个字符'))
+    callback();
   }
+  // password (value) {
+  //   if (!value) return '密码'
+  //   if (!/^\w{6,24}$/.test(value)) return '密码是6-24个字符'
+  //   return true
+  // },
+  // mobile (value) {
+  //   if (!value) return ('手机号码')
+  //   if (!/^1[3-9]\d{9}$/.test(value)) return ('手机号格式错误')
+  //   return true
+  // },
+  // code (value) {
+  //   if (!value) return '验证码'
+  //   if (!/^\d{6}$/.test(value)) return '验证码是6个数字'
+  //   return true
+  // },
+  // isAgree (value) {
+  //   if (!value) return '请勾选同意用户协议'
+  //   return true
+  // }
 }
 
 // 导出验证规则
 export default {
     userName: [
       { required: true, message: '姓名不能为空', trigger: 'blur' },
-      { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
+      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+    ],
+    passWord: [
+      { validator: validate.passWord, trigger: 'blur' }
     ],
     nickName: [
       { required: true, message: '昵称不能为空', trigger: 'blur' },
@@ -144,49 +152,6 @@ export default {
     ],
     score:[
       { required: true, message: '内容不能为空', trigger: 'blur' }
-    ],
-
-    
-   
-
-
-    
-
-
-    
-   
-   
-
-
-    // region: [
-    //   { required: true, message: '活动区域', trigger: 'change' }
-    // ],
-    // date1: [
-    //   { type: 'date', required: true, message: '日期', trigger: 'change' }
-    // ],
-    // date2: [
-    //   { type: 'date', required: true, message: '时间', trigger: 'change' }
-    // ],
-    // type: [
-    //   { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-    // ],
-    // resource: [
-    //   { required: true, message: '活动资源', trigger: 'change' }
-    // ],
-    // desc: [
-    //   { required: true, message: '请填写活动形式', trigger: 'blur' }
-    // ],
-    // pass: [
-    //   { validator: validate.account, trigger: 'blur' }
-    // ],
-    // checkPass: [
-    //   { validator: validate.account, trigger: 'blur' }
-    // ],
-    // age: [
-    //   { validator: validate.checkAge, trigger: 'blur' }
-    // ],
-    // title: [
-    //   { required: true, message: '商品名称不能为空', trigger: 'blur' }
-    // ]
+    ]
 }
 
