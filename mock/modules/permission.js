@@ -12,10 +12,10 @@ export default {
           menu: [
             {
               path: '/home',
-              name: 'HomeView',
+              name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'Home.vue'
+              url: 'HomeView.vue'
             },
             {
               path: '/user',
@@ -78,7 +78,7 @@ export default {
               children: [
                 {
                   path: '/ArticleList',
-                  name: 'articleList',
+                  name: 'ArticleList',
                   label: '文章列表',
                   icon: 'document-copy',
                   url: 'article/ArticleList.vue'

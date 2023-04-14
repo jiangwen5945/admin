@@ -82,7 +82,7 @@
     </el-pagination>
 
     <!-- 弹出层 -->
-    <el-dialog title="新增商品" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
+    <el-dialog :title="modalType ? '修改商品':'新增商品'" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
       <el-form ref="form" :model="form" label-width="80px" :rules="rules">
         <!-- 商品名称 -->
         <el-form-item label="商品名称" prop="title">

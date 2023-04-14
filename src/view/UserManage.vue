@@ -51,7 +51,7 @@
     </div>
 
     <!-- 弹出层 -->
-    <el-dialog title="新增用户" :visible="isVisible" :before-close="handleClose" center>
+    <el-dialog :title="modalType ? '修改用户':'新增用户'" :visible="isVisible" :before-close="handleClose" center :destroy-on-close="true">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="姓名" prop="userName">
           <el-input v-model="form.userName" placeholder="请输入姓名"></el-input>
@@ -110,12 +110,11 @@ export default {
         limit: 10,
         userName: ''
       },
-      rules: rules
+      rules
     };
   },
   mounted() {
     getRolesList().then(res => this.roleList =  res.list) // 获取角色列表数据
-    console.log('rules', rules);
   },
   methods: {
     getDataApi() {

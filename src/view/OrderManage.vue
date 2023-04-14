@@ -65,7 +65,7 @@
     </div>
 
     <!-- 表单弹出层 -->
-    <el-dialog title="新增订单" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
+    <el-dialog :title="modalType ? '修改订单':'新增订单'" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="订单状态" prop="orderState">
           <el-select v-model="form.orderState" placeholder="请选择订单状态"  style="width: 100%;">
@@ -105,7 +105,7 @@
     </el-dialog>
 
     <!-- 订单状态弹出层 -->
-    <el-dialog title="订单状态" :visible="isVisible2" :before-close="handleClose2" center>
+    <el-dialog title="订单状态" :visible="isVisible2" :before-close="handleClose2" center :destroy-on-close="true">
       <el-timeline>
         <el-timeline-item v-for="(activity, index) in activities" :key="index" :type="activity.type"
           :timestamp="activity.timestamp">

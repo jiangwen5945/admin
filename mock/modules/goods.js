@@ -143,7 +143,6 @@ export default {
   },
   createGoods: (data) => {
     const currentGoods = JSON.parse(data.body)
-    console.log('currentGoods', currentGoods);
     mockList.unshift({
       ...currentGoods,
       id: mockList[mockList.length - 1].id + 1
@@ -190,7 +189,6 @@ export default {
   getGoodsCategory: (params) => {
     const { name,  level, page = 1, limit = 10 } = paramToObj(params.url)
     let allCategoryList = []
-    console.log('level', level);
     switch (level) {
       case '1': allCategoryList = [...topCategoryList.list]
         break;
@@ -204,9 +202,7 @@ export default {
       if (name && e.name.indexOf(name) === -1) return false
       return true
     })
-    console.log('categoryList', categoryList);
     const pageList = categoryList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
-    console.log('pageList', pageList);
     return {
       code: 200,
       message: "success",
@@ -254,7 +250,6 @@ export default {
         message: '参数不正确'
       }
     } else {
-      console.log('1',  typeof level);
       switch (level) {
         case '1':
           topCategoryList.list = topCategoryList.list.filter(e => e.id !== id)
@@ -281,24 +276,20 @@ export default {
     const current = JSON.parse(data.body)
     switch (current.level) {
       case '1':
+        // 一级分类同级变更
         topCategoryList.list.forEach(e => {
-          // 一级分类同级变更
           if (e.id === current.id) {
             e = Object.assign(e, current)
           }
         })
         break;
       case '2':
-        console.log(2,current);
         // 二级分类同级变更
         subCategoryList.list.forEach(e => {
-          console.log('二级分类变更',e.id ,current.id);
           if (e.id === current.id) {
             e = Object.assign(e, current)
           }
         })
-        // 一级分类变更为二级分类
-
         break;
       default: 
         return {

@@ -1,32 +1,48 @@
 import Cookie from 'js-cookie'
+import {resetRouter} from '@/router'
 export default {
   state: {
     isCollapse: false, // 控制菜单展开或关闭
-     // 面包屑数组
+     // 导航栏数组
     navList: [{
       path: '/',
-      name: 'HomeView',
+      name: 'home',
       label: '首页',
       icon: 's-home',
-      url: 'Home/Home'
+      url: '/HomeView.vue'
     }],
+    // 面包屑数组
     crumbsList: [{
       path: '/',
-      name: 'HomeView',
       label: '首页'
     }],
     menuArray: [],
     userInfo: ''
   },
   mutations: {
-    
-    updateCrumbs(state, item){
+    // 更新面包屑数据
+    updateCrumbs(state, path){
+      const menuArray = JSON.parse(Cookie.get('menuArray')) || []
+      // 获取label名称
+      const getLabel = function(arr,p){
+        for (let i = 0; i < arr.length; i++) {
+          if(arr[i].path === p){
+            return arr[i].label
+          }
+          if(arr[i].children){
+            for (let j = 0; j < arr[i].children.length; j++) {
+              if( arr[i].children[j].path === p){
+                return arr[i].children[j].label
+              }
+            }
+          }
+        }
+      }
       const crumb = {
-        path: item.path,
-        name: item.name,
-        label: item.query.label
+        path,
+        label: getLabel(menuArray, path)
       } 
-      if (item.name !== 'HomeView') {
+      if (path !== '/home') {
         state.crumbsList.splice(1,1,crumb)
       }
     },
@@ -34,7 +50,7 @@ export default {
     handleCollapseMenu(state) {
       state.isCollapse = !state.isCollapse
     },
-    // 更新面包屑数据
+    // 更新导航栏数组数据
     updateNavList(state, item) {
       // 仅在当前位置不为首页且面包屑列表中不存在时添加更新数据
       if (item.name !== 'home' && state.navList.findIndex(e => e.name === item.name) === -1) {
@@ -81,6 +97,7 @@ export default {
         component: ()=>import('@/view/Error.vue')
       })
       // 路由动态添加
+      resetRouter() // 解决vue路由警告:Duplicate named routes definition问题
       fomatMenuArr.forEach(item => {
         router.addRoute('main', item)
       })

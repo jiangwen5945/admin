@@ -52,7 +52,7 @@
     </div>
 
     <!-- 弹出层 -->
-    <el-dialog title="新增菜单" :visible.sync="isVisible" :before-close="handleClose"  center width="30%">
+    <el-dialog :title="modalType ? '修改菜单':'新增菜单'" :visible.sync="isVisible" :before-close="handleClose"  center width="30%" :destroy-on-close="true">
       <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
         <el-form-item label="菜单级别" prop="level">
           <el-select v-model="formatLevel" placeholder="请选择菜单级别"  style="width: 100%;">

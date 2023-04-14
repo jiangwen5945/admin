@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <div class="table-header">
       <div class="left">
-        <el-button type="primary" size="medium" @click="handleAdd">+新增</el-button>
+        <el-button type="primary" size="medium" @click="toCreatePage">+新增</el-button>
       </div>
       <div class="right">
         <el-input placeholder="请输入查询内容" v-model="queryParam.name"></el-input>
@@ -56,7 +56,7 @@
     </el-pagination>
 
     <!-- 弹出层 -->
-    <el-dialog title="新增文章" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
+    <el-dialog :title="modalType ? '修改文章':'新增文章'" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <!-- 文章名称 -->
         <el-form-item label="标题" prop="title">
@@ -152,6 +152,16 @@ export default {
     // 查询
     handleQuery() {
       this.getData() //请求列表数据
+    },
+    toCreatePage(){
+      this.$router.push({ path: 'CreateArticle'})
+      this.$store.commit('updateNavList', {
+        path: '/CreateArticle',
+        name: 'CreateArticle',
+        label: '创建文章',
+        icon: 'edit-outline',
+        url: 'article/CreateArticle.vue'
+      })
     }
   }
 }

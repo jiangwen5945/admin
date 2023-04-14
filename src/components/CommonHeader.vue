@@ -72,6 +72,14 @@ export default {
     userInfo() {
       return this.$store.state.tab.userInfo || JSON.parse(Cookie.get('userInfo'))
     }
+  },
+  watch:{
+    '$route.path'(newVal, oldVal) {
+      if(newVal !== oldVal){
+        // 根据当前路由地址更新面包屑
+        this.$store.commit('updateCrumbs', newVal)
+      }
+    },
   }
 }
 </script>

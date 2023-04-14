@@ -35,9 +35,9 @@
         </el-table-column>
       </el-table>
     </div>
-
+    
     <!-- 弹出层 -->
-    <el-dialog title="新增角色" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
+    <el-dialog :title="modalType ? '修改角色':'新增角色'" :visible.sync="isVisible" :before-close="handleClose" center width="30%" :destroy-on-close="true">
       <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
         <el-form-item label="角色名称" prop="roleName">
           <el-input v-model.number="form.roleName" autocomplete="off" placeholder="请输入角色名称"></el-input>
@@ -48,8 +48,8 @@
             :data="authorityList" 
             show-checkbox
             node-key="roleId"
-            :default-checked-keys="this.form.authority"
-            :default-expanded-keys="this.form.authority"
+            :default-checked-keys="form.authority"
+            :default-expanded-keys="form.authority"
             @check-change="handleCheckChange"
             :props="{
               children: 'roleList',
@@ -88,7 +88,7 @@ export default {
       form: {
         roleId: null,
         roleName: null,
-        authority: null,
+        authority: null, // 当前勾选权限
         available: false
       },
     };

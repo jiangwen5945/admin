@@ -38,11 +38,17 @@ router.beforeEach((to, from, next) => {
   if (!token && to.name !== 'LoginView') {
     next({ name: 'LoginView' })
   } else if (token && to.name === 'LoginView') {
-    next({ name: 'HomeView' })
+    next({ name: 'home' })
   }
   next()
 })
 
-
+// 解决vue路由警告:Duplicate named routes definition问题
+export function resetRouter () {
+	const newRouter = new VueRouter({
+    routes
+  })
+	router.matcher = newRouter.matcher
+}
 
 export default router

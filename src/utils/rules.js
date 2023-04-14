@@ -39,7 +39,7 @@ export default {
     ],
     nickName: [
       { required: true, message: '昵称不能为空', trigger: 'blur' },
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+      { min: 2, message: '昵称长度不能少于2位', trigger: 'blur' }
     ],
     roles: [
       { required: true, message: '角色不能为空', trigger: 'blur' }

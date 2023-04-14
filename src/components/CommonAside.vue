@@ -1,9 +1,10 @@
 <template lang="">
   <el-menu 
-      default-active="1-4-1" 
+      router
+      :default-active='$route.name'
       class="aside-menu" 
       @open="handleOpen" 
-      @close="handleClose" 
+      @close="handleClose"
       :collapse="isCollapse"
   > 
       <!-- 菜单标题 -->
@@ -31,15 +32,11 @@
             </el-menu-item>
           </el-menu-item-group>
       </el-submenu>
-    
   </el-menu>
 </template>
 <script>
 import Cookie from 'js-cookie'
 export default {
-  data() {
-    return {};
-  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -47,13 +44,12 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-    async handleUrl(item) {
-      if (this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')) {
-        await this.$router.push({ path: item.path, query: { label: item.label }})
-      }
-      // 调用面包屑/导航更新
+    handleUrl(item) {
+      // if (this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')) {
+      //   this.$router.push({ path: item.path, query: { label: item.label }})
+      // }
+      // 调用导航栏更新
       this.$store.commit('updateNavList', item)
-      this.$store.commit('updateCrumbs', this.$route)
     }
   },
   computed: {

@@ -41,7 +41,7 @@
     </div>
 
     <!-- 弹出层 -->
-    <el-dialog title="新增部门" :visible.sync="isVisible" :before-close="handleClose"  center width="30%">
+    <el-dialog :title="modalType ? '修改部门':'新增部门'" :visible.sync="isVisible" :before-close="handleClose"  center width="30%"  :destroy-on-close="true">
       <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
         <el-form-item label="部门名称"  prop="className">
           <el-input v-model="form.className" autocomplete="off" placeholder="请输入部门名称"></el-input>

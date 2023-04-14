@@ -47,7 +47,7 @@
       </el-table>
     </div>
     <!-- 弹出层 -->
-    <el-dialog title="新增商品分类" :visible.sync="isVisible" :before-close="handleClose" center width="40%">
+    <el-dialog :title="modalType ? '修改商品分类':'新增商品分类'" :visible.sync="isVisible" :before-close="handleClose" center width="40%" :destroy-on-close="true">
       <el-form ref="form" :model="form" :rules="rules"  label-width="100px">
         <!-- 分类名称 -->
         <el-form-item label="分类名称"  prop="name">
@@ -55,7 +55,7 @@
         </el-form-item>
         <!-- 分类等级 -->
         <el-form-item label="分类等级"  prop="level">
-          <el-select v-model="form.level" placeholder="请选择分类等级"  style="width: 100%;">
+          <el-select v-model="form.level" placeholder="请选择分类等级"  style="width: 100%;" :disabled='modalType===1'>
             <el-option label="一级分类" value="1"></el-option>
             <el-option label="二级分类" value="2"></el-option>
           </el-select>
