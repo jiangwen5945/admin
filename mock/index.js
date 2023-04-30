@@ -10,6 +10,11 @@ import authorityApi from './modules/authority'
 import orderApi from './modules/order'
 import articleApi from './modules/article'
 
+// 模拟延时
+Mock.setup({
+    timeout: '300-600'
+})
+
 
 // 首页数据
 Mock.mock('/api/home/getData', homeApi.getStatisticalData)
@@ -73,5 +78,17 @@ Mock.mock(/api\/article\/getArticleList/, articleApi.getArticleList)
 Mock.mock('/api/article/del', 'post', articleApi.deleteArticle)
 Mock.mock('/api/article/add', 'post', articleApi.createArticle)
 Mock.mock('/api/article/edit', 'post', articleApi.updateArticle)
+
+// 导入Excel
+const importExcel = ()=>{
+    return {
+        code: 200,
+        result: {
+            message: 'success'
+        }
+    }
+}
+
+Mock.mock('/api/importExcel','post', importExcel)
 
 

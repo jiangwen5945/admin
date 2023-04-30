@@ -4,6 +4,7 @@
     <div class="table-header">
       <div class="left">
         <el-button type="primary" size="medium" @click="handleAdd">+新增</el-button>
+        <CommonExcel :tableData="tableData" :loading.sync="loading"></CommonExcel>
       </div>
       <div class="right">
         <el-input placeholder="请输入用户名称" v-model="queryParam.userName"></el-input>
@@ -14,13 +15,14 @@
     <!-- 表格内容 -->
     <div class="table-content">
       <!-- 数据表格 -->
-      <el-table :data="tableData" stripe>
+      <el-table :data="tableData" stripe ref="refTable">
         <el-table-column prop="userName" label="姓名" width="180">
         </el-table-column>
         <el-table-column prop="roles" label="角色" width="180">
           <template #default="scope">
-            <el-button type="text" size="mini" v-for="item in scope.row.roles" :key="item.index">
-              {{ item }}
+            <!-- 此处需处理导入后的角色数据不是数组，而变为字符串 -->
+            <el-button type="text" size="mini" v-for="item in (typeof scope.row.roles === 'string' ? scope.row.roles.split(',') : scope.row.roles)" :key="item.index">
+              {{ item  }}
             </el-button>
           </template>
         </el-table-column>
@@ -89,9 +91,13 @@
 import { getUser, addUser, editUser, delUser, getRolesList } from '../api'
 import { mixins } from "../mixin";
 import rules from '../utils/rules'
+import CommonExcel from '@/components/CommonExcel.vue'
 export default {
   name: 'UserManage',
   mixins:[mixins],
+  components:{
+    CommonExcel
+  },
   data() {
     return {
       roleList:[],
@@ -110,7 +116,8 @@ export default {
         limit: 10,
         userName: ''
       },
-      rules
+      rules,
+      loading: false
     };
   },
   mounted() {
@@ -137,6 +144,11 @@ export default {
     // 查询数据
     handleQuery() {
       this.getData() //请求列表数据
+    }
+  },
+  filters:{
+    test: function(value){
+      return value.trim().split(',')
     }
   }
 }

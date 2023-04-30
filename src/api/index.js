@@ -139,4 +139,9 @@ export const updateArticle = data => {
   return http.post('/article/edit', data)
 }
 
+// 导入订单
+export const importExcel = data => {
+  return http.post('/importExcel')
+}
+
 

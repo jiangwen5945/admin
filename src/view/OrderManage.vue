@@ -1,9 +1,10 @@
 <template>
-  <div class="page">
+  <div class="page" v-loading="loading">
     <!-- 头部 -->
     <div class="table-header">
       <div class="left">
-        <el-button type="primary" size="medium" @click="handleAdd">+新增订单</el-button>
+        <el-button type="primary" size="medium" @click="handleAdd" class="addBtn">新增订单</el-button>
+        <CommonExcel :tableData="tableData" :loading.sync="loading"></CommonExcel>
       </div>
       <div class="right">
         <el-input placeholder="请输入订单编号" v-model="queryParam.id"></el-input>
@@ -13,7 +14,7 @@
 
     <!-- 表格内容 -->
     <div class="table-content">
-      <el-table :data="tableData" stripe>
+      <el-table :data="tableData" stripe ref="refTable">
         <!-- 勾选 -->
         <el-table-column type="selection" width="55" />
 
@@ -65,26 +66,27 @@
     </div>
 
     <!-- 表单弹出层 -->
-    <el-dialog :title="modalType ? '修改订单':'新增订单'" :visible.sync="isVisible" :before-close="handleClose" center width="30%">
+    <el-dialog :title="modalType ? '修改订单' : '新增订单'" :visible.sync="isVisible" :before-close="handleClose" center
+      width="30%">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="订单状态" prop="orderState">
-          <el-select v-model="form.orderState" placeholder="请选择订单状态"  style="width: 100%;">
-            <el-option label="待付款" value="0"/>
-            <el-option label="待发货" value="1"/>
-            <el-option label="待签收" value="2"/>
-            <el-option label="待评价" value="3"/>
-            <el-option label="已完成" value="4"/>
+          <el-select v-model="form.orderState" placeholder="请选择订单状态" style="width: 100%;">
+            <el-option label="待付款" value="0" />
+            <el-option label="待发货" value="1" />
+            <el-option label="待签收" value="2" />
+            <el-option label="待评价" value="3" />
+            <el-option label="已完成" value="4" />
           </el-select>
         </el-form-item>
         <el-form-item label="支付金额" prop="payMoney">
           <el-input v-model="form.payMoney" autocomplete="off" placeholder="请输入支付金额"></el-input>
         </el-form-item>
         <el-form-item label="支付方式" prop="payType">
-          <el-select v-model="form.payType" placeholder="请选择支付方式"  style="width: 100%;">
-            <el-option label="支付宝" value="1"/>
-            <el-option label="微信" value="2"/>
-            <el-option label="银联" value="3"/>
-            <el-option label="货到付款" value="4"/>
+          <el-select v-model="form.payType" placeholder="请选择支付方式" style="width: 100%;">
+            <el-option label="支付宝" value="1" />
+            <el-option label="微信" value="2" />
+            <el-option label="银联" value="3" />
+            <el-option label="货到付款" value="4" />
           </el-select>
         </el-form-item>
         <el-form-item label="收件人姓名" prop="receiverContact">
@@ -96,7 +98,7 @@
         <el-form-item label="收件人地址" prop="receiverAddress">
           <el-input v-model="form.receiverAddress" autocomplete="off" placeholder="请输入收件人地址"></el-input>
         </el-form-item>
-      
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -117,14 +119,19 @@
 </template>
  
 <script>
-import { getOrderList, deleteOrder, createOrder, updateOrder } from '../api'
+import { getOrderList, deleteOrder, createOrder, updateOrder, importExcel } from '../api'
 import { mixins } from "../mixin";
 import rules from '@/utils/rules';
+import * as XLSX from "xlsx"; // 导入excel插件
+import CommonExcel from '@/components/CommonExcel.vue'
 export default {
   name: 'OrderManage',
   mixins: [mixins],
   mounted() {
     this.initActivities = JSON.parse(JSON.stringify(this.activities))
+  },
+  components:{
+    CommonExcel
   },
   data() {
     return {
@@ -138,13 +145,13 @@ export default {
       form: {
         id: '',
         orderState: '',
-        payType:'',
-        postFee:'',
-        payMoney:'',
-        receiverContact:'',
-        receiverMobile:'',
-        receiverAddress:'',
-        skus:'',
+        payType: '',
+        postFee: '',
+        payMoney: '',
+        receiverContact: '',
+        receiverMobile: '',
+        receiverAddress: '',
+        skus: '',
       },
       activities: [
         { content: '待付款' },
@@ -153,7 +160,8 @@ export default {
         { content: '待评价' },
         { content: '待完成' }
       ],
-      initActivities: null
+      initActivities: null,
+      loading: false
     };
   },
   methods: {
@@ -187,7 +195,7 @@ export default {
       this.activities = [...this.initActivities]
       this.isVisible2 = false
     },
-    handleQuery(){
+    handleQuery() {
       this.getData() //请求列表数据
     }
   }

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <el-menu 
       router
       :default-active='$route.name'
