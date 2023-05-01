@@ -41,7 +41,10 @@ export default {
     }
   },
   mounted() {
-    this.keyUpSubmit()
+    document.addEventListener('keydown', this.keyUpSubmit)
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown',this.keyUpSubmit)
   },
   computed: {
     isSubmit() {
@@ -50,7 +53,9 @@ export default {
   },
   methods: {
     ...mapMutations(['setMenuArray', 'addMenuToRouter', 'setUserInfo']),
-    handleLogin() {
+    async handleLogin() {
+      const isRule = await this.$refs.formRef.validate()
+      if (!isRule) return
       userPermission(this.form).then(data => {
         Cookie.set('token', data.token)  // 在cookie中缓存token
         this.setMenuArray(data.menu)     // 获取菜单的数据，存入store中
@@ -62,12 +67,10 @@ export default {
     },
     // 回车登录
     keyUpSubmit() {
-      document.onkeydown = () => {
         let key = window.event.keyCode;
         if (key === 13) {
           this.handleLogin();
         }
-      };
     },
   }
 }

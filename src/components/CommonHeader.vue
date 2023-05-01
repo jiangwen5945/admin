@@ -9,10 +9,12 @@
       </el-breadcrumb>
     </div>
     <div class="r-container">
+      <span class="timer"> {{ currentTime }}</span>
       <div class="theme-icon">
-        <i class="el-icon-search" @click="handleSearch"/>
-        <i :class="[isFullScreen ? 'el-icon-crop' : 'el-icon-full-screen']" @click="switchFull"/> 
-        <i :class="[theme === 'dark' ? 'el-icon-sunny' : 'el-icon-moon']" @click="changeTheme(theme)" />
+        <i class="el-icon-lock" @click="setLockScreen(true)"/>
+        <i :class="[isFullScreen ? 'el-icon-crop' : 'el-icon-full-screen']" @click="setFullScreen"/> 
+        <i :class="[theme === 'dark' ? 'el-icon-sunny' : 'el-icon-moon']" @click="setTheme(theme)" />
+        <i class="el-icon-bell"/>
       </div>
       <el-dropdown @command="handleCommand">
         <div class="el-dropdown-link avatar-box">
@@ -29,13 +31,25 @@
 </template>
 <script>
 import Cookie from 'js-cookie'
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import { formatDate } from '@/utils/format'
 export default {
   data() {
     return {
+      timer: null,
+      currentTime: formatDate(),
     }
   },
+  mounted(){
+    this.getCurrentTime()
+  },
   methods: {
+    // 获取当前实时时间
+    getCurrentTime(){
+      this.timer = setInterval(() => {
+        this.currentTime = formatDate()
+      }, 1000);
+    },
     // 处理下拉菜单选项中的事件
     handleCommand(command) {
       if (command === 'logout') {
@@ -50,24 +64,18 @@ export default {
     handleBtn() {
       this.$store.commit('handleCollapseMenu')
     },
-    // 切换主题
-    changeTheme(currentTheme) {
-      const  reverseTheme = currentTheme === 'dark' ? 'light' : 'dark'
-      this.$store.commit('setting/changeTheme', reverseTheme)
-    },
-    // 切换全屏
-    switchFull() {
-      this.$store.commit('setting/setFullScreen')
-    },
-    // 处理查询
-    handleSearch(){}
+    ...mapActions('setting',[
+      'setLockScreen',
+      'setFullScreen',
+      'setTheme'
+    ])
   },
   computed: {
     ...mapState({
       navList: state => state.tab.navList,
       crumbsList: state => state.tab.crumbsList,
       theme: state => state.setting.theme,
-      isFullScreen: state => state.setting.isFullScreen
+      isFullScreen: state => state.setting.isFullScreen,
     }),
     userInfo() {
       return this.$store.state.tab.userInfo || JSON.parse(Cookie.get('userInfo'))
@@ -80,9 +88,16 @@ export default {
         this.$store.commit('updateCrumbs', newVal)
       }
     },
+  },
+  beforeDestroy() {
+    // 在Vue实例销毁前，清除我们的定时器
+    if (this.timer) {
+      clearInterval(this.timer); 
+    }
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .header-container {
   height: 100%;
@@ -112,6 +127,11 @@ export default {
     display: flex;
     align-items: center;
     margin-right: 20px;
+    .timer {
+      font-size: 14px;
+      color: #666;
+      width: 150px;
+    }
 
     .avatar-box {
       display: flex;

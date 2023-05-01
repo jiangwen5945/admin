@@ -74,7 +74,7 @@ export default {
             },
             {
               label: '文章管理',
-              icon: 'files',
+              icon: 'document',
               children: [
                 {
                   path: '/ArticleList',
@@ -91,10 +91,17 @@ export default {
                   url: 'article/CreateArticle.vue'
                 }
               ]
+            },
+            {
+              path: '/files',
+              name: 'files',
+              label: '文件管理',
+              icon: 'files',
+              url: 'FilesManage.vue'
             }
           ],
           userInfo: {
-            username: 'Admin',
+            username: 'admin',
             role: '超级管理员',
             avatar: 'user.jpg'
           },
@@ -102,7 +109,7 @@ export default {
           message: '获取成功'
         }
       }
-    } else if (userName === 'xiaoxiao' && passWord === 'xiaoxiao') {
+    } else if (userName === 'jiangwen' && passWord === 'jiangwen') {
       return {
         code: 200,
         message: 'success',
@@ -138,7 +145,7 @@ export default {
             }
           ],
           userInfo: {
-            username: '小小',
+            username: 'jiangwen',
             role: '客服',
             avatar: 'avatar.jpg',
           },

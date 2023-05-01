@@ -14,6 +14,8 @@
         </el-main>
       </el-container>
     </el-container>
+    <!-- 屏幕内容保护组件 -->
+    <LockScreen />
   </div>
 </template>
 
@@ -21,6 +23,7 @@
 import CommonAside from '../components/CommonAside.vue'
 import CommonHeader from '../components/CommonHeader.vue'
 import CommonTag from '../components/CommonTag.vue'
+import LockScreen from '@/components/LockScreen.vue'
 export default {
   name: 'MainView',
   props: {
@@ -29,21 +32,21 @@ export default {
   components: {
     CommonAside,
     CommonHeader,
-    CommonTag
+    CommonTag,
+    LockScreen
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style scoped lang="scss">
 .el-header {
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
-  border-bottom: 1px solid rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  border-bottom: 1px solid rgba(0, 21, 41, .08);
 }
 
 .el-main {
   background: #f7f7f7;
-  height:calc(100vh - 84px)
+  height: calc(100vh - 84px)
 }
 </style>

@@ -1,6 +1,7 @@
 const state = {
   theme: 'dark',
-  isFullScreen: false
+  isFullScreen: false,
+  isLockScreen: false
 }
 
 const mutations = {
@@ -9,7 +10,7 @@ const mutations = {
     localStorage.setItem('theme', state.theme)
     document.getElementById("app").setAttribute("class", 'custom-' + state.theme);
   },
-  setFullScreen(state) {
+  changeFullScreen(state) {
     state.isFullScreen = !state.isFullScreen
     if (!state.isFullScreen) {
       document.exitFullScreen && document.exitFullscreen();
@@ -44,10 +45,27 @@ const mutations = {
     }
     
   },
+  changeLockScreen(state,isLock){
+    state.isLockScreen = isLock
+  }
+}
+
+const actions = {
+  setLockScreen(ctx,isLock){
+    ctx.commit('changeLockScreen', isLock)
+  },
+  setFullScreen(ctx){
+    ctx.commit('changeFullScreen')
+  },
+  setTheme(ctx, value){
+    const reverseTheme = value === 'dark' ? 'light' : 'dark'
+    ctx.commit('changeTheme', reverseTheme)
+  }
 }
 
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  actions
 }
