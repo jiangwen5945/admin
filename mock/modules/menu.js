@@ -14,13 +14,13 @@ function param2Obj(url) {
     '"}'
   )
 }
-
 const mockList = Mock.mock({
-  "list|5": [{
+  "list|12": [{
     "id|+1000": 1000,
     "available": 1,
-    "level": 1,
-    "name|+1": ['用户管理', '菜单管理', '角色管理', '部门管理', '商品列表', '商品分类'],
+    "level|+1": [1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1],
+    "name|+1": ['用户管理', '菜单管理', '角色管理', '部门管理', '商品管理', '商品列表', '商品分类','订单管理', '文章管理', '文章列表', '创建文章', '文件管理'],
+    "icon|+1": [ 'user', 'turn-off', 's-check', 's-marketing', 'box','s-order', 's-grid', 's-claim','document', 'document-copy', 'edit-outline', 'files'],
     "roles|+1": [
       ['管理员'],
       ['管理员'],
