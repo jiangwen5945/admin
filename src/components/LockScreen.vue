@@ -18,7 +18,7 @@
         style="width: 70%"
       >
         <template #append>
-          <el-button type="primary" @click="handleUnlock()">解锁</el-button>
+          <i class="el-icon-unlock" @click="handleUnlock()" style="font-size: 18px;"/>
         </template>
       </el-input>
     </div>
@@ -77,7 +77,6 @@ export default {
         this.$store.dispatch('setting/setLockScreen', false)
         //状态提示  
         this.$notify({ 
-          title: 'Title',
           message: '欢迎回来！',
           type: 'success',
           duration: 1200
