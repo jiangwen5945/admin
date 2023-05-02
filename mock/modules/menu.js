@@ -87,13 +87,14 @@ export default {
   },
 
   updateMenu: (params) => { 
-    const { id, available, level, name, roles } = JSON.parse(params.body)
+    const { id, available, level, name, roles, icon } = JSON.parse(params.body)
     mockList.list.forEach(e => {
       if (e.id === id) {
         e.available = available
         e.level = level
         e.name = name
         e.roles = roles
+        e.icon = icon
         return true
       }
     });
