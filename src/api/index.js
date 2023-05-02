@@ -139,9 +139,20 @@ export const updateArticle = data => {
   return http.post('/article/edit', data)
 }
 
-// 导入订单
-export const importExcel = data => {
-  return http.post('/importExcel')
+
+// 文件
+export const checkChunkStatus = data => {
+  return http.post('/checkChunkStatus', data)
 }
+
+export const uploadFiles = data => {
+  return http.post('/uploadFiles', data)
+}
+
+export const importExcel = data => {
+  return http.post('/importExcel', data)
+}
+
+
 
 

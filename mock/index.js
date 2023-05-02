@@ -9,6 +9,7 @@ import permissionApi from './modules/permission'
 import authorityApi from './modules/authority'
 import orderApi from './modules/order'
 import articleApi from './modules/article'
+import filesApi from './modules/files'
 
 // 模拟延时
 Mock.setup({
@@ -79,16 +80,10 @@ Mock.mock('/api/article/del', 'post', articleApi.deleteArticle)
 Mock.mock('/api/article/add', 'post', articleApi.createArticle)
 Mock.mock('/api/article/edit', 'post', articleApi.updateArticle)
 
-// 导入Excel
-const importExcel = ()=>{
-    return {
-        code: 200,
-        result: {
-            message: 'success'
-        }
-    }
-}
 
-Mock.mock('/api/importExcel','post', importExcel)
+// 文件
+Mock.mock('/api/checkChunkStatus','post', filesApi.checkChunkStatus)
+Mock.mock('/api/uploadFiles','post', filesApi.uploadFiles)
+Mock.mock('/api/importExcel','post', filesApi.importExcel)
 
 
