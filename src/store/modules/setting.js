@@ -47,12 +47,13 @@ const mutations = {
   },
   changeLockScreen(state,isLock){
     state.isLockScreen = isLock
+    localStorage.setItem('lock-screen', isLock)
   }
 }
 
 const actions = {
   setLockScreen(ctx,isLock){
-    ctx.commit('changeLockScreen', isLock)
+    ctx.commit('changeLockScreen', JSON.parse(isLock))
   },
   setFullScreen(ctx){
     ctx.commit('changeFullScreen')

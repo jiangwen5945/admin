@@ -24,5 +24,6 @@ new Vue({
   created(){
     store.commit('addMenuToRouter',router) // 动态添加侧边栏菜单
     store.commit('setting/changeTheme',  localStorage.getItem('theme') || 'dark') // 获取用户主题
+    store.dispatch('setting/setLockScreen',  localStorage.getItem('lock-screen')) // 锁定屏幕
   }
 }).$mount('#app')

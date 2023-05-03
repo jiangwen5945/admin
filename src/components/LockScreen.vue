@@ -1,5 +1,5 @@
 <template>
-  <div class="lock-screen" v-if="isLockScreen">
+  <div class="lock-screen" v-show="$store.state.setting.isLockScreen">
     <div class="content-box">
       <img
         class="avatar"
@@ -27,7 +27,6 @@
 <script>
 import Cookie from 'js-cookie'
 import { userPermission } from '../api'
-import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -39,9 +38,6 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      isLockScreen: state => state.setting.isLockScreen,
-    }),
     userInfo() {
       return this.$store.state.tab.userInfo || JSON.parse(Cookie.get('userInfo'))
     }
@@ -83,7 +79,7 @@ export default {
         })
       })
     },
-      // 回车登录
+    // 回车登录
     keyUpSubmit() {
         let key = window.event.keyCode;
         if (key === 13) {

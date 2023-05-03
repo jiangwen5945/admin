@@ -110,7 +110,7 @@ export default {
             userName: 'admin',
             nickName: '无敌小钢炮',
             role: '超级管理员',
-            avatar: 'https://s2.loli.net/2023/05/03/2KFb8XuCQiNre4E.jpg'
+            avatar: 'https://jiangwen-admin.oss-cn-beijing.aliyuncs.com/user.jpg'
           },
           token: Mock.Random.guid(),
           message: '获取成功'
@@ -161,7 +161,7 @@ export default {
             userName: 'jiangwen',
             nickName: '非洲小白脸',
             role: '客服',
-            avatar: 'https://s2.loli.net/2023/05/03/zwej95IOtPaQTlK.jpg',
+            avatar: 'https://jiangwen-admin.oss-cn-beijing.aliyuncs.com/user2.jpg',
           },
           token: Mock.Random.guid(),
           message: '获取成功'
