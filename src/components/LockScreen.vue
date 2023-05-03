@@ -1,24 +1,13 @@
 <template>
   <div class="lock-screen" v-show="$store.state.setting.isLockScreen">
     <div class="content-box">
-      <img
-        class="avatar"
-        :src="userInfo.avatar"
-        alt=""
-      />
+      <img class="avatar" :src="userInfo.avatar" alt="" />
       <span class="info"> {{ userInfo.role }}: {{ userInfo.userName }} </span>
 
-      <el-input
-        v-model="form.passWord"
-        type="password"
-        placeholder="请输入当前用户密码"
-        show-password
-        prefix-icon="el-icon-key"
-        size="large"
-        style="width: 70%"
-      >
+      <el-input v-model="form.passWord" type="password" placeholder="请输入当前用户密码" show-password prefix-icon="el-icon-key"
+        size="large" style="width: 70%">
         <template #append>
-          <i class="el-icon-unlock" @click="handleUnlock()" style="font-size: 18px;"/>
+          <i class="el-icon-unlock" @click="handleUnlock()" style="font-size: 18px;" />
         </template>
       </el-input>
     </div>
@@ -30,11 +19,12 @@ import { userPermission } from '../api'
 export default {
   data() {
     return {
-        form: {
-            userName: '',
-            passWord: ''
-        },
-        leaveTime: ''
+      timer: null,
+      form: {
+        userName: '',
+        passWord: ''
+      },
+      leaveTime: '',
     };
   },
   computed: {
@@ -42,13 +32,21 @@ export default {
       return this.$store.state.tab.userInfo || JSON.parse(Cookie.get('userInfo'))
     }
   },
-  mounted(){
+  mounted() {
     document.addEventListener('visibilitychange', this.handleVisiable)
     document.addEventListener('keydown', this.keyUpSubmit)
   },
+  watch: {
+    "$store.state.setting.isLockScreen": {
+      immediate: true,
+      handler(val) {
+        this.isView(!val)
+      }
+    }
+  },
   methods: {
     // 处理当前页面可见状态
-    handleVisiable(e){
+    handleVisiable(e) {
       switch (e.target.visibilityState) {
         case 'prerender':
           console.log('prerender');
@@ -59,37 +57,64 @@ export default {
           break;
         case 'visible':
           // 离开页面3分钟后自动开启屏幕内容保护
-          if(new Date().getTime() - this.leaveTime > 1000 * 60 * 3) {
-            this.$store.dispatch('setting/setLockScreen', true)
+          if (new Date().getTime() - this.leaveTime > 1000 * 60 * 3) {
+            this.handleLock()
           }
           break;
       }
     },
+    // 开启屏幕保护
+    handleLock() {
+      this.$store.dispatch('setting/setLockScreen', true)
+    },
     // 解除屏幕锁定
     handleUnlock() {
-      if(this.form.passWord === '') return
+      if (this.form.passWord === '') return
       this.form.userName = this.userInfo.userName
       userPermission(this.form).then(data => {
         this.$store.dispatch('setting/setLockScreen', false)
         //状态提示  
-        this.$notify({ 
+        this.$notify({
           message: '欢迎回来！',
           type: 'success',
           duration: 1200
         })
+
+        // document.removeEventListener('onkeydown')
+        // document.removeEventListener('oncontextmenu')
       })
     },
     // 回车登录
     keyUpSubmit() {
-        let key = window.event.keyCode;
-        if (key === 13) {
-          this.handleUnlock();
-        }
+      if (window.event.keyCode === 13) {
+        this.handleUnlock();
+      }
     },
+
+    // 是否禁用元素审查
+    isView(e) {
+      if (e) {
+        document.onkeydown = null
+        document.oncontextmenu = null
+      } else {
+        // 禁用f12
+        document.onkeydown = () => {
+          if (window.event && window.event.keyCode == 123) {
+            this.$message({
+              message: '已锁定',
+              type: 'warning'
+            })
+            return false;
+          }
+        }
+        // 禁用右键
+        document.oncontextmenu = () => false
+      }
+    }
   },
   beforeDestroy() {
-    document.removeEventListener('visibilitychange',this.handleVisiable)
-    document.removeEventListener('keydown',this.keyUpSubmit)
+    document.removeEventListener('visibilitychange', this.handleVisiable)
+    document.removeEventListener('keydown', this.keyUpSubmit)
   }
 };
 </script>
@@ -106,6 +131,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
   .content-box {
     width: 30%;
     background: #fff;
@@ -119,17 +145,18 @@ export default {
     border-radius: 10px;
     padding-bottom: 34px;
 
-    .avatar{
+    .avatar {
       border-radius: 50%;
       width: 100px;
       transform: translateY(-26px);
     }
+
     .info {
       font-size: 16px;
       color: #4d4d4d;
       margin-bottom: 20px;
     }
-    
+
 
 
   }
