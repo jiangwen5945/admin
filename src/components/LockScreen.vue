@@ -6,7 +6,7 @@
         :src="userInfo.avatar"
         alt=""
       />
-      <span class="info"> {{ userInfo.role }}: {{ userInfo.username }} </span>
+      <span class="info"> {{ userInfo.role }}: {{ userInfo.userName }} </span>
 
       <el-input
         v-model="form.passWord"
@@ -72,7 +72,7 @@ export default {
     // 解除屏幕锁定
     handleUnlock() {
       if(this.form.passWord === '') return
-      this.form.userName = this.userInfo.username
+      this.form.userName = this.userInfo.userName
       userPermission(this.form).then(data => {
         this.$store.dispatch('setting/setLockScreen', false)
         //状态提示  
