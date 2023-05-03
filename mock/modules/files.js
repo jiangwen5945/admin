@@ -14,12 +14,19 @@ export default {
         }
     },
 
+  
+
     // 上传文件
     uploadFiles: params => {
         return {
             code: 200,
             message: "success",
-            result: null
+            result:   Mock.mock({
+                "filesUrl|1": [
+                    'https://s2.loli.net/2023/05/03/2KFb8XuCQiNre4E.jpg', 
+                    'https://s2.loli.net/2023/05/03/zwej95IOtPaQTlK.jpg'
+                ]
+            })
         }
     },
 

@@ -98,12 +98,19 @@ export default {
               label: '文件管理',
               icon: 'files',
               url: 'FilesManage.vue'
+            },
+            {
+              path: '/member',
+              name: 'member',
+              label: '个人中心',
+              url: 'MemberCenter.vue'
             }
           ],
           userInfo: {
-            username: 'admin',
+            userName: 'admin',
+            nickName: '无敌小钢炮',
             role: '超级管理员',
-            avatar: 'user.jpg'
+            avatar: 'https://s2.loli.net/2023/05/03/2KFb8XuCQiNre4E.jpg'
           },
           token: Mock.Random.guid(),
           message: '获取成功'
@@ -142,12 +149,19 @@ export default {
               label: '角色管理',
               icon: 's-check',
               url: 'RoleManage.vue'
+            },
+            {
+              path: '/member',
+              name: 'member',
+              label: '个人中心',
+              url: 'MemberCenter.vue'
             }
           ],
           userInfo: {
-            username: 'jiangwen',
+            userName: 'jiangwen',
+            nickName: '非洲小白脸',
             role: '客服',
-            avatar: 'avatar.jpg',
+            avatar: 'https://s2.loli.net/2023/05/03/zwej95IOtPaQTlK.jpg',
           },
           token: Mock.Random.guid(),
           message: '获取成功'
@@ -156,10 +170,20 @@ export default {
     } else {
       return {
         code: -999,
-        message: 'error',
+        message: '用户名或密码错误',
         result: {
-          message: '密码错误'
+          message: '用户名或密码错误'
         }
+      }
+    }
+  },
+  saveUserInfo: params => {
+    console.log('params', params);
+    return {
+      code: 200,
+      message: 'success',
+      result: {
+        userInfo: JSON.parse(params.body),
       }
     }
   }

@@ -18,11 +18,11 @@
       </div>
       <el-dropdown @command="handleCommand">
         <div class="el-dropdown-link avatar-box">
-          <el-avatar :src="require('@/assets/' + userInfo.avatar)"></el-avatar>
-          <span class="username">{{ userInfo.username }}</span>
+          <el-avatar :src="userInfo.avatar"></el-avatar>
+          <span class="username">{{ userInfo.userName }}</span>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="1">个人中心</el-dropdown-item>
+          <el-dropdown-item command="member">个人中心</el-dropdown-item>
           <el-dropdown-item command="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -58,6 +58,10 @@ export default {
         Cookie.remove('userInfo')  // 退出清除菜单列表数据
         this.$message.success('退出成功!');
         this.$router.push('/login')
+      }
+      if(command === 'member') {
+        if(this.$route.path === '/member') return
+        this.$router.push('/member')
       }
     },
     // 折叠侧边菜单栏

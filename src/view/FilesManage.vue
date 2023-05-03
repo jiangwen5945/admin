@@ -2,7 +2,7 @@
   <div class="page">
     <el-tabs v-model="activeName" type="card" class="demo-tabs" @tab-click="handleTab">
       <el-tab-pane label="图片" name="first">
-        <el-upload action="/api/importExcel" list-type="picture-card" :auto-upload="true"
+        <el-upload action="/api/uploadFiles" list-type="picture-card" :auto-upload="true"
           accept=".png, .jepg, .jpg, .webp" multiple :on-success="handleSuccess" :before-upload="beforeUpload"
           :file-list="imageList">
           <i slot="default" class="el-icon-plus"></i>
@@ -22,7 +22,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="音视频" name="second">
-        <el-upload action="/api/importExcel" :file-list="videoList" list-type="picture">
+        <el-upload action="/api/uploadFiles" :file-list="videoList" list-type="picture">
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传音视频格式的文件，且不超过500M</div>
         </el-upload>
@@ -36,7 +36,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="压缩包" name="fourth">
-        <el-upload drag action="/api/importExcel" :auto-upload="false" multiple :file-list="bigFileList"
+        <el-upload drag action="/api/uploadFiles" :auto-upload="false" multiple :file-list="bigFileList"
           :on-change="handleChange">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -49,7 +49,6 @@
 </template>
  
 <script>
-import axios from 'axios';
 import { uploadFiles, checkChunkStatus } from '../api'
 export default {
   name: 'FilesManage',
@@ -133,7 +132,6 @@ export default {
     handleSuccess(res, file) {
       console.log('上传成功', res, file);
       // this.imageUrl = URL.createObjectURL(file.raw);
-      console.log('上传成功', res, file);
     },
     // 上传前
     beforeUpload(file) {

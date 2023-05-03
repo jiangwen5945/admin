@@ -49,7 +49,7 @@ export default {
       return this.menuArray.filter(item => item.children)
     },
     noChildren() {
-      return this.menuArray.filter(item => !item.children)
+      return this.menuArray.filter(item => !item.children && item.icon)
     },
     isCollapse() {
       return this.$store.state.tab.isCollapse

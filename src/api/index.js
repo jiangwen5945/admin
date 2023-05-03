@@ -25,6 +25,10 @@ export const delUser = (data) => {
 export const userPermission = (data) =>{
     return http.post('/permissionApi/getMenu',data)
 }
+export const saveUserInfo = (data) =>{
+    return http.post('/permissionApi/saveUserInfo',data)
+}
+
 
 // 权限
 export const getAuthorityList = () => {

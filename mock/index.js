@@ -20,8 +20,11 @@ Mock.setup({
 // 首页数据
 Mock.mock('/api/home/getData', homeApi.getStatisticalData)
 
-// 登录权限
+// 获取登陆用户菜单
 Mock.mock(/api\/permissionApi\/getMenu/,'post', permissionApi.getMenu)
+
+// 修改用户信息
+Mock.mock(/api\/permissionApi\/saveUserInfo/,'post', permissionApi.saveUserInfo)
 
 // 权限管理
 Mock.mock(/api\/authority\/getAuthorityList/, authorityApi.getAuthorityList)

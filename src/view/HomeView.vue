@@ -7,7 +7,7 @@
           <div class="user-wrap">
             <div class="user-img">
               <el-image style="width: 150px; height: 150px;border-radius: 50%;"
-                :src="require('@/assets/' + userInfo.avatar)"></el-image>
+                :src="userInfo.avatar"></el-image>
             </div>
             <div class="user-info">
               <p class="name">{{ userInfo.username }}</p>

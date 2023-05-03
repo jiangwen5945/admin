@@ -3,7 +3,7 @@
     <div class="content-box">
       <img
         class="avatar"
-        :src="require('@/assets/' + userInfo.avatar)"
+        :src="userInfo.avatar"
         alt=""
       />
       <span class="info"> {{ userInfo.role }}: {{ userInfo.username }} </span>
