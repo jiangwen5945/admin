@@ -15,35 +15,50 @@ export default {
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'HomeView.vue'
+              url: 'HomeView.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/user',
               name: 'user',
               label: '用户管理',
               icon: 'user',
-              url: 'UserManage.vue'
+              url: 'UserManage.vue',
+              meta: {
+                keepAlive: false
+              }
             },
             {
               path: '/menu',
               name: 'menu',
               label: '菜单管理',
               icon: 'turn-off',
-              url: 'MenuManage.vue'
+              url: 'MenuManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/role',
               name: 'role',
               label: '角色管理',
               icon: 's-check',
-              url: 'RoleManage.vue'
+              url: 'RoleManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/class',
               name: 'class',
               label: '部门管理',
               icon: 's-marketing',
-              url: 'ClassManage.vue'
+              url: 'ClassManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               label: '商品管理',
@@ -54,14 +69,20 @@ export default {
                   name: 'GoodsList',
                   label: '商品列表',
                   icon: 's-order',
-                  url: 'goods/GoodsList.vue'
+                  url: 'goods/GoodsList.vue',
+                  meta: {
+                    keepAlive: true
+                  }
                 },
                 {
                   path: '/GoodsCategory',
                   name: 'GoodsCategory',
                   label: '商品分类',
                   icon: 's-grid',
-                  url: 'goods/GoodsCategory.vue'
+                  url: 'goods/GoodsCategory.vue',
+                  meta: {
+                    keepAlive: true
+                  }
                 }
               ]
             },
@@ -70,7 +91,10 @@ export default {
               name: 'order',
               label: '订单管理',
               icon: 's-claim',
-              url: 'OrderManage.vue'
+              url: 'OrderManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               label: '文章管理',
@@ -81,14 +105,20 @@ export default {
                   name: 'ArticleList',
                   label: '文章列表',
                   icon: 'document-copy',
-                  url: 'article/ArticleList.vue'
+                  url: 'article/ArticleList.vue',
+                  meta: {
+                    keepAlive: true
+                  }
                 },
                 {
                   path: '/CreateArticle',
                   name: 'CreateArticle',
                   label: '创建文章',
                   icon: 'edit-outline',
-                  url: 'article/CreateArticle.vue'
+                  url: 'article/CreateArticle.vue',
+                  meta: {
+                    keepAlive: true
+                  }
                 }
               ]
             },
@@ -97,13 +127,19 @@ export default {
               name: 'files',
               label: '文件管理',
               icon: 'files',
-              url: 'FilesManage.vue'
+              url: 'FilesManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/member',
               name: 'member',
               label: '个人中心',
-              url: 'MemberCenter.vue'
+              url: 'MemberCenter.vue',
+              meta: {
+                keepAlive: true
+              }
             }
           ],
           userInfo: {
@@ -127,34 +163,49 @@ export default {
               name: 'home',
               label: '首页',
               icon: 's-home',
-              url: 'HomeView.vue'
+              url: 'HomeView.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/user',
               name: 'user',
               label: '用户管理',
               icon: 'user',
-              url: 'UserManage.vue'
+              url: 'UserManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/menu',
               name: 'menu',
               label: '菜单管理',
               icon: 'turn-off',
-              url: 'MenuManage.vue'
+              url: 'MenuManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/role',
               name: 'role',
               label: '角色管理',
               icon: 's-check',
-              url: 'RoleManage.vue'
+              url: 'RoleManage.vue',
+              meta: {
+                keepAlive: true
+              }
             },
             {
               path: '/member',
               name: 'member',
               label: '个人中心',
-              url: 'MemberCenter.vue'
+              url: 'MemberCenter.vue',
+              meta: {
+                keepAlive: true
+              }
             }
           ],
           userInfo: {

@@ -6,8 +6,7 @@
         <el-card>
           <div class="user-wrap">
             <div class="user-img">
-              <el-image style="width: 150px; height: 150px;border-radius: 50%;"
-                :src="userInfo.avatar"></el-image>
+              <el-image style="width: 150px; height: 150px;border-radius: 50%;" :src="userInfo.avatar"></el-image>
             </div>
             <div class="user-info">
               <p class="name">{{ userInfo.username }}</p>
@@ -71,86 +70,18 @@ export default {
   data() {
     return {
       pieData: [],
-      lineData:[],
-      barData:[],
+      lineData: [],
+      barData: [],
       tableData: [],
       countData: []
     }
   },
-  mounted() {
-    // 获取首页数据
-    getData().then(data => {
-      const { pieData, lineData, barData, tableData, countData } = data
-
-      this.pieData = pieData
-      this.lineData = lineData
-      this.barData = barData
-      this.tableData = tableData
-      this.countData = countData
-
-      /** 折线图 */
-      const echarts1 = echarts.init(this.$refs.echarts1);
-      // 处理图例的种类
-      const legendStyle = Object.keys(lineData.data[0])
-      // 处理折线图类别的数据
-      const seriesData = []
-      legendStyle.forEach(e => {
-        seriesData.push({
-          name: e,
-          data: lineData.data.map(item => item[e]),
-          type: 'line'
-        })
-      })
-      echarts1.setOption({
-        legend: { data: legendStyle },
-        xAxis: {
-          data: lineData.date
-        },
-        yAxis: {},
-        tooltip: {
-          trigger: 'axis'
-        },
-        series: seriesData
-      });
-
-      /** 柱状图 */
-      const echarts2 = echarts.init(this.$refs.echarts2);
-      // 处理图例的种类
-      echarts2.setOption({
-        xAxis: {
-          data: barData.map(item => item.date)
-        },
-        yAxis: {},
-        legend: { data: ['新增用户', '活跃用户'] },
-        // 提示框
-        tooltip: {
-          trigger: "axis",
-        },
-        series: [
-          {
-            name: '新增用户',
-            data: barData.map(item => item.new),
-            type: 'bar'
-          }, {
-            name: '活跃用户',
-            data: barData.map(item => item.active),
-            type: 'bar'
-          }
-        ]
-      })
-
-      // 饼状图
-      const echarts3 = echarts.init(this.$refs.echarts3);
-      echarts3.setOption({
-        series: [
-          {
-            type: 'pie',
-            data: pieData,
-            radius: '60%'
-          }
-        ]
-      })
-    });
+  activated() {
+    this.getHomeData() // 缓存组件激活时候重新获取数据，避免数据不能及时更新
+  },
+  async mounted(){
+    await this.getHomeData()
+    this.initChart()
   },
   computed: {
     userInfo() {
@@ -158,7 +89,82 @@ export default {
     }
   },
   methods: {
+    // 获取首页数据
+    getHomeData() {
+     return getData().then(data => {
+        const { pieData, lineData, barData, tableData, countData } = data
+        this.pieData = pieData
+        this.lineData = lineData
+        this.barData = barData
+        this.tableData = tableData
+        this.countData = countData
+      });
+    },
+    // 初始化Echarts
+    initChart(){
+        /** 折线图 */
+        const echarts1 = echarts.init(this.$refs.echarts1);
+        // 处理图例的种类
+        const legendStyle = Object.keys(this.lineData.data[0])
+        // 处理折线图类别的数据
+        const seriesData = []
+        legendStyle.forEach(e => {
+          seriesData.push({
+            name: e,
+            data: this.lineData.data.map(item => item[e]),
+            type: 'line'
+          })
+        })
+        echarts1.setOption({
+          legend: { data: legendStyle },
+          xAxis: {
+            data: this.lineData.date
+          },
+          yAxis: {},
+          tooltip: {
+            trigger: 'axis'
+          },
+          series: seriesData
+        });
 
+        /** 柱状图 */
+        const echarts2 = echarts.init(this.$refs.echarts2);
+        // 处理图例的种类
+        echarts2.setOption({
+          xAxis: {
+            data: this.barData.map(item => item.date)
+          },
+          yAxis: {},
+          legend: { data: ['新增用户', '活跃用户'] },
+          // 提示框
+          tooltip: {
+            trigger: "axis",
+          },
+          series: [
+            {
+              name: '新增用户',
+              data: this.barData.map(item => item.new),
+              type: 'bar'
+            }, {
+              name: '活跃用户',
+              data: this.barData.map(item => item.active),
+              type: 'bar'
+            }
+          ]
+        })
+
+        // 饼状图
+        const echarts3 = echarts.init(this.$refs.echarts3);
+        echarts3.setOption({
+          series: [
+            {
+              type: 'pie',
+              data: this.pieData,
+              radius: '60%'
+            }
+          ]
+        })
+    }
   }
 }
 </script>
@@ -210,14 +216,15 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  .card{
+
+  .card {
     background: #fff;
     display: flex;
     flex: 0 0 32%;
     margin-bottom: 20px;
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
   }
 
   .count-icon {
@@ -234,7 +241,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     margin-left: 14px;
-    p{
+
+    p {
       margin: 0;
       padding: 0;
       width: 100%;

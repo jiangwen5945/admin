@@ -10,7 +10,12 @@
         </el-header>
         <el-main>
           <common-tag></common-tag>
-          <router-view></router-view>
+          <!-- 这里是会被缓存的视图组件(对name为member的组件不缓存) -->
+          <keep-alive exclude="member"> 
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+          <!-- 这里是不被缓存的视图组件 -->
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
         </el-main>
       </el-container>
     </el-container>

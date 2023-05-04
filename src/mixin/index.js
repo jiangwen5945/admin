@@ -12,6 +12,10 @@ export const mixins = {
     this.getData() // 获取基础列表数据
     this.initForm = JSON.parse(JSON.stringify(this.form)) // 拷贝一份初始化的表单数据
   },
+  activated(){
+    console.log('缓存组件：activated');
+    this.getData() // 缓存组件激活时候重新获取数据，避免数据不能及时更新
+  },
   methods: {
     // 获取数据
     async getData() {
