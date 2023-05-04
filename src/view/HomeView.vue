@@ -78,10 +78,12 @@ export default {
   },
   activated() {
     this.getHomeData() // 缓存组件激活时候重新获取数据，避免数据不能及时更新
+    console.log('缓存组件激活时候重新获取数据');
   },
   async mounted(){
     await this.getHomeData()
     this.initChart()
+    console.log('首页mounted');
   },
   computed: {
     userInfo() {

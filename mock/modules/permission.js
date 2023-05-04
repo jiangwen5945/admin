@@ -27,7 +27,7 @@ export default {
               icon: 'user',
               url: 'UserManage.vue',
               meta: {
-                keepAlive: false
+                keepAlive: true
               }
             },
             {
